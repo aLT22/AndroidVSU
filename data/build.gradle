@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compileSdk
+
+
+
+    defaultConfig {
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdk
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "AppId", "\"35d315be\"")
+            buildConfigField("String", "AppKey", "\"101cc822b09af8ab9f8128a01ce446b1\"")
+            buildConfigField("String", "ContentType", "\"application/json\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField("String", "AppId", "\"35d315be\"")
+            buildConfigField("String", "AppKey", "\"101cc822b09af8ab9f8128a01ce446b1\"")
+            buildConfigField("String", "ContentType", "\"application/json\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(ProjectModules.domain)
+
+    testImplementation TestDependencies.jUnit
+    androidTestImplementation TestDependencies.runner
+    androidTestImplementation TestDependencies.espresso
+
+    implementation ProjectDependencies.kotlin
+
+    implementation ProjectDependencies.supportAppCompatv7
+
+    implementation ProjectDependencies.koinAndroid
+
+    implementation ProjectDependencies.retrofit
+    implementation ProjectDependencies.rxJava2Adapter
+    implementation ProjectDependencies.gson
+    implementation ProjectDependencies.loggingInterceptor
+
+    implementation ProjectDependencies.rxJava
+    implementation ProjectDependencies.rxAndroid
+
+    implementation ProjectDependencies.lifecycle
+    kapt ProjectDependencies.lifecycleCompiler
+
+    implementation ProjectDependencies.paging
+}
