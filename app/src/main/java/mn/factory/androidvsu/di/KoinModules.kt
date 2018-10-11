@@ -4,11 +4,11 @@ import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentatio
 import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMapper
 import mn.factory.androidvsu.ui.adapter.rv.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityViewModel
-import mn.factory.data.api.adzuna.AdzunaRepositoryImpl
+import mn.factory.data.api.adzuna.RepositoryImpl
 import mn.factory.data.api.adzuna.mapper.JobSearchResultNetworkToJobSearchResultMapper
 import mn.factory.data.api.adzuna.mapper.VersionNetworkToVersionMapper
 import mn.factory.data.utils.RxSchedulersImpl
-import mn.factory.domain.adzuna.AdzunaRepository
+import mn.factory.domain.adzuna.Repository
 import mn.factory.domain.adzuna.interactor.GetJobsInteractor
 import mn.factory.domain.adzuna.interactor.GetVersionInteractor
 import mn.factory.domain.adzuna.interactor.request.GetJobsRequest
@@ -36,7 +36,7 @@ val interactorsModule = module {
 }
 
 val repositoryModule = module {
-    single<AdzunaRepository> { AdzunaRepositoryImpl(get(), get(), get()) }
+    single<Repository> { RepositoryImpl(get(), get(), get()) }
 }
 
 val mappersModule = module {

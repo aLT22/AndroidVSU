@@ -20,6 +20,9 @@ class BaseViewHolder(
     private val mBinding = viewDataBinding
     lateinit var mViewModel: ViewModel
 
+    //todo: add these kind of animation into the project
+    //https://proandroiddev.com/implement-google-inbox-style-animation-on-android-18c261baeda6
+
     fun bind(anyObject: Any?, publishSubject: PublishSubject<Any>, viewModel: ViewModel) {
         when (anyObject) {
             is JobPresentation -> {
@@ -28,6 +31,11 @@ class BaseViewHolder(
 
                 mBinding as ItemJobBinding
                 mBinding.root.setOnClickListener { publishSubject.onNext(anyObject) }
+
+                //Needs for correct ellipsize working
+                mBinding.title.isSelected = true
+                mBinding.company.isSelected = true
+                mBinding.location.isSelected = true
             }
             else -> {
             }

@@ -7,7 +7,7 @@ import mn.factory.domain.adzuna.model.Version
 /**
  * Created by Turkin A. on 05/10/2018.
  */
-interface AdzunaRepository {
+interface Repository {
 
     fun getVersion(): Single<Version>
 

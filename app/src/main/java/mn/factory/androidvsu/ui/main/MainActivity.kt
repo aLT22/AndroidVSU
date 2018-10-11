@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             mJobsAdapter.jobs = it ?: emptyList()
         })
 
+        mViewModel.contentVisibility.observe(this, Observer {
+            swipeRefreshLayout.isRefreshing = !mViewModel.contentVisibility.value!!
+        })
+
         mJobsAdapter.clickObservable.subscribe {
             val jobPresentation = it as JobPresentation
             Toast.makeText(this, jobPresentation.id.toString(), Toast.LENGTH_SHORT).show()
@@ -41,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         jobList?.apply {
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             adapter = mJobsAdapter
+        }
+
+        swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                mViewModel.fetchJobs()
+            }
         }
     }
 

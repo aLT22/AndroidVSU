@@ -19,14 +19,17 @@ class MainActivityViewModel(
     val contentVisibility: MutableLiveData<Boolean> = MutableLiveData()
     val jobsLiveData: MutableLiveData<List<JobPresentation>> = MutableLiveData()
 
+    val jobsInteractorRequest = GetJobsRequest()
+
     init {
         contentVisibility.postValue(false)
         fetchJobs()
     }
 
-    private fun fetchJobs() {
-        val jobsInteractorRequest = GetJobsRequest()
-        jobsInteractorRequest.resultsPerPage = 20
+    fun fetchJobs() {
+        jobsInteractorRequest.resultsPerPage = 100
+        jobsInteractorRequest.country = "ru"
+        jobsInteractorRequest.page = 1
 
         getJobsInteractor
                 .execute(jobsInteractorRequest)
