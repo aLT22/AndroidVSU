@@ -9,6 +9,7 @@ import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Turkin A. on 05/10/2018.
@@ -28,7 +29,9 @@ fun createOkHttpClient(): OkHttpClient {
         okHttpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         clientBuilder.addInterceptor(okHttpLoggingInterceptor)
     }
-    return clientBuilder.build()
+    return clientBuilder
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .build()
 }
 
 fun createRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
