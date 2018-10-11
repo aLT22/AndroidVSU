@@ -17,7 +17,9 @@ class MainActivityViewModel(
 ) : ViewModel() {
 
     val contentVisibility: MutableLiveData<Boolean> = MutableLiveData()
-    val jobsLiveData: MutableLiveData<List<JobPresentation>> = MutableLiveData()
+
+    val jobsLiveData: MutableLiveData<ArrayList<JobPresentation>> = MutableLiveData()
+    val jobsList: ArrayList<JobPresentation> = ArrayList()
 
     val jobsInteractorRequest = GetJobsRequest()
 
@@ -27,21 +29,31 @@ class MainActivityViewModel(
     }
 
     fun fetchJobs() {
-        jobsInteractorRequest.resultsPerPage = 100
-        jobsInteractorRequest.country = "ru"
-        jobsInteractorRequest.page = 1
-
         getJobsInteractor
                 .execute(jobsInteractorRequest)
                 .doOnSubscribe { contentVisibility.postValue(false) }
-                .doOnComplete { contentVisibility.postValue(true) }
-                .doOnError { Log.e(TAG, it.message) }
                 .map { mapperJobs.map(it) }
-                .doOnNext { entity ->
-                    jobsLiveData.postValue(entity.results)
-                }
-                .subscribe()
+                .retry(5)
+                .subscribe(
+                        { entity ->
+                            entity.results?.let { jobsList.addAll(it) }
+                            jobsLiveData.postValue(jobsList)
+                        },
+                        {
+                            Log.e(TAG, it.message)
+                        },
+                        {
+                            contentVisibility.postValue(true)
+                        }
+                )
 
+    }
+
+    fun resetRequest() {
+        jobsInteractorRequest.apply {
+            resultsPerPage = 10
+            page = 1
+        }
     }
 
     companion object {
