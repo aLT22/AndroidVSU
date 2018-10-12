@@ -1,5 +1,6 @@
 package mn.factory.androidvsu.ui.adapter.rv
 
+import android.arch.lifecycle.MutableLiveData
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.model.adzuna.JobPresentation
 
@@ -8,11 +9,11 @@ import mn.factory.androidvsu.model.adzuna.JobPresentation
  */
 class JobsRecyclerAdapter : BaseRecyclerAdapter() {
 
-    var jobs: List<JobPresentation> = ArrayList()
+    var jobs: MutableLiveData<List<JobPresentation>> = MutableLiveData()
 
-    override fun getAnyObjectForPosition(position: Int): Any? = jobs[position]
+    override fun getAnyObjectForPosition(position: Int): Any? = jobs.value?.get(position)
 
     override fun getLayoutIdForPosition(position: Int): Int? = R.layout.item_job
 
-    override fun getItemCount(): Int = jobs.size
+    override fun getItemCount(): Int = jobs.value?.size ?: 0
 }
