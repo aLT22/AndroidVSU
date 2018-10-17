@@ -29,13 +29,11 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun onBindViewHolder(p0: BaseViewHolder, p1: Int) {
-        val anyObject = getAnyObjectForPosition(p1)
+        bindViewHolder(p0, p1, null)
+    }
 
-        when (anyObject) {
-            is JobPresentation -> {
-                p0.bind(anyObject, clickSubject, JobPresentationViewModel(anyObject))
-            }
-        }
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int, payloads: MutableList<Any>) {
+        bindViewHolder(holder, position, payloads)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -46,5 +44,17 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
     @LayoutRes
     protected abstract fun getLayoutIdForPosition(position: Int): Int?
+
+    protected abstract fun setItems(items: List<*>)
+
+    private fun bindViewHolder(holder: BaseViewHolder, position: Int, payloads: MutableList<Any>?) {
+        val anyObject = getAnyObjectForPosition(position)
+
+        when (anyObject) {
+            is JobPresentation -> {
+                holder.bind(anyObject, clickSubject, JobPresentationViewModel(anyObject), payloads)
+            }
+        }
+    }
 
 }
