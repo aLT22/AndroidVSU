@@ -21,4 +21,14 @@ class JobPresentationViewModel(
                     "${jobPresentation.salaryMin}£ - ${jobPresentation.salaryMax}£"
             )
 
+    companion object {
+        const val TITLE = "TITLE"
+        const val DESCRIPTION = "DESCRIPTION"
+        const val COMPANY_TITLE = "COMPANY_TITLE"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
+        const val LOCATION = "LOCATION"
+        const val SALARY_FROM = "SALARY_FROM"
+        const val SALARY_TO = "SALARY_TO"
+    }
 }
