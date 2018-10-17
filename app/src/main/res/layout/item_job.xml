@@ -117,7 +117,7 @@
             tools:text="London, UK"/>
 
         <TextView
-            android:id="@+id/salaryFrom"
+            android:id="@+id/salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
