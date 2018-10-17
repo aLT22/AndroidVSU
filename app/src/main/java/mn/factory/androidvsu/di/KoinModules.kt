@@ -2,7 +2,6 @@ package mn.factory.androidvsu.di
 
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMapper
-import mn.factory.androidvsu.ui.ViewModelFactory
 import mn.factory.androidvsu.ui.adapter.rv.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityViewModel
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListViewModel
@@ -28,7 +27,6 @@ val appModule = module {
 
 val viewModule = module {
     factory { JobsRecyclerAdapter(get()) }
-    single { ViewModelFactory(get(), get()) }
 
     //Activity VMs
     viewModel { MainActivityViewModel() }
