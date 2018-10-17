@@ -1,5 +1,7 @@
 package mn.factory.androidvsu.ui.main.adzuna.jobs.list
 
+import android.annotation.SuppressLint
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
@@ -17,16 +19,24 @@ class JobListViewModel(
 ) : ViewModel() {
     val loading: MutableLiveData<Boolean> = MutableLiveData()
 
-    val jobsLiveData: MutableLiveData<ArrayList<JobPresentation>> = MutableLiveData()
+    private val jobsLiveData: MutableLiveData<ArrayList<JobPresentation>> = MutableLiveData()
     var jobsList: ArrayList<JobPresentation> = ArrayList()
 
     val jobsInteractorRequest = GetJobsRequest()
 
-    init {
-        loading.postValue(true)
-        fetchJobs(true)
+    fun getJobs(isRefresh: Boolean): LiveData<ArrayList<JobPresentation>> {
+        fetchJobs(isRefresh)
+        return jobsLiveData
     }
 
+    fun resetRequest() {
+        jobsInteractorRequest.apply {
+            resultsPerPage = 10
+            page = 1
+        }
+    }
+
+    @SuppressLint("CheckResult")
     fun fetchJobs(isRefresh: Boolean) {
         getJobsInteractor
                 .execute(jobsInteractorRequest)
@@ -40,7 +50,7 @@ class JobListViewModel(
                             } else {
                                 entity.results?.let { jobsList.addAll(it) }
                             }
-                            jobsLiveData.postValue(jobsList)
+                            jobsLiveData.value = jobsList
                         },
                         {
                             Log.e(TAG, it.message)
@@ -50,13 +60,6 @@ class JobListViewModel(
                         }
                 )
 
-    }
-
-    fun resetRequest() {
-        jobsInteractorRequest.apply {
-            resultsPerPage = 10
-            page = 1
-        }
     }
 
     companion object {

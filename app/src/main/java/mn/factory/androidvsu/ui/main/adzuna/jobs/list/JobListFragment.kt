@@ -1,6 +1,7 @@
 package mn.factory.androidvsu.ui.main.adzuna.jobs.list
 
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -30,12 +31,13 @@ class JobListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        retainInstance = true
 
         //todo: change notifyDataSetChanged() method on DiffUtil.Callback
-        mViewModel.jobsLiveData.observe(this, Observer {
+        /*mViewModel.jobsLiveData.observe(this, Observer {
             mJobsAdapter.jobs.postValue(it ?: emptyList())
             mJobsAdapter.notifyDataSetChanged()
-        })
+        })*/
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,20 @@ class JobListFragment : Fragment() {
         return mBinding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        mViewModel.getJobs(true).observe(this, Observer {
+            mJobsAdapter.setJobs(it ?: emptyList<JobPresentation>())
+            mJobsAdapter.notifyDataSetChanged()
+        })
+
+        mViewModel.loading.observe(this, Observer {
+            mBinding.swipeRefreshLayout.isRefreshing = it!!
+        })
+    }
+
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,31 +70,24 @@ class JobListFragment : Fragment() {
             val jobPresentation = it as JobPresentation
             Toast.makeText(activity, jobPresentation.id.toString(), Toast.LENGTH_SHORT).show()
         }
-
-        jobList?.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = mJobsAdapter
-            setHasFixedSize(true)
-        }
     }
 
     override fun onStart() {
         super.onStart()
 
-        jobList.layoutManager?.let {
-            endlessScrollListener = object : EndlessScrollListener(it) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView) {
-                    mViewModel.jobsInteractorRequest.page = page
-                    mViewModel.fetchJobs(false)
+        jobList?.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            adapter = mJobsAdapter
+            setHasFixedSize(true)
+            layoutManager?.let {
+                endlessScrollListener = object : EndlessScrollListener(it) {
+                    override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView) {
+                        mViewModel.jobsInteractorRequest.page = page
+                        mViewModel.fetchJobs(false)
+                    }
                 }
             }
-            jobList.addOnScrollListener(endlessScrollListener as EndlessScrollListener)
-        }
-
-        endlessScrollListener?.let { it ->
-            it.loading.observe(this, Observer {
-                swipeRefreshLayout.isRefreshing = it!!
-            })
+            addOnScrollListener(endlessScrollListener as EndlessScrollListener)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -88,14 +97,6 @@ class JobListFragment : Fragment() {
                 mViewModel.fetchJobs(true)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mViewModel.loading.observe(this, Observer {
-            mBinding.swipeRefreshLayout.isRefreshing = it!!
-        })
     }
 
     override fun onStop() {
