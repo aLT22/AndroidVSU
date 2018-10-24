@@ -24,10 +24,7 @@ class JobListViewModel(
 
     val jobsInteractorRequest = GetJobsRequest()
 
-    fun getJobs(isRefresh: Boolean): LiveData<ArrayList<JobPresentation>> {
-        fetchJobs(isRefresh)
-        return jobsLiveData
-    }
+    fun getJobs(): LiveData<ArrayList<JobPresentation>> = jobsLiveData
 
     fun resetRequest() {
         jobsInteractorRequest.apply {

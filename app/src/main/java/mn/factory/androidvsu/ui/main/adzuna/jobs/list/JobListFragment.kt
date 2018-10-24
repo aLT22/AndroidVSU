@@ -27,17 +27,20 @@ class JobListFragment : Fragment() {
     lateinit var mBinding: FragmentJobListBinding
     private val mJobsAdapter: JobsRecyclerAdapter by inject()
 
-    private var endlessScrollListener: EndlessScrollListener? = null
+    private var mEndlessScrollListener: EndlessScrollListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
 
-        //todo: change notifyDataSetChanged() method on DiffUtil.Callback
-        /*mViewModel.jobsLiveData.observe(this, Observer {
-            mJobsAdapter.jobs.postValue(it ?: emptyList())
-            mJobsAdapter.notifyDataSetChanged()
-        })*/
+        mEndlessScrollListener = object : EndlessScrollListener() {
+
+            override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView) {
+                mViewModel.jobsInteractorRequest.page = page
+                mViewModel.fetchJobs(false)
+            }
+        }
+        mViewModel.fetchJobs(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +55,7 @@ class JobListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mViewModel.getJobs(true).observe(this, Observer {
+        mViewModel.getJobs().observe(this, Observer {
             mJobsAdapter.setJobs(it ?: emptyList<JobPresentation>())
             mJobsAdapter.notifyDataSetChanged()
         })
@@ -70,39 +73,23 @@ class JobListFragment : Fragment() {
             val jobPresentation = it as JobPresentation
             Toast.makeText(activity, jobPresentation.id.toString(), Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         jobList?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = mJobsAdapter
             setHasFixedSize(true)
             layoutManager?.let {
-                endlessScrollListener = object : EndlessScrollListener(it) {
-                    override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView) {
-                        mViewModel.jobsInteractorRequest.page = page
-                        mViewModel.fetchJobs(false)
-                    }
-                }
+                mEndlessScrollListener?.mLayoutManager = it
             }
-            addOnScrollListener(endlessScrollListener as EndlessScrollListener)
+            addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
-            endlessScrollListener?.let {
-                it.resetState()
+            mEndlessScrollListener?.let {
                 mViewModel.resetRequest()
                 mViewModel.fetchJobs(true)
             }
         }
-    }
-
-    override fun onStop() {
-        endlessScrollListener?.let { jobList.removeOnScrollListener(it) }
-        endlessScrollListener = null
-        super.onStop()
     }
 
     companion object {
@@ -110,16 +97,7 @@ class JobListFragment : Fragment() {
 
         const val PARAM_ONE_KEY = "PARAM_ONE_KEY"
 
-        fun newInstance() = JobListFragment()
-
-        fun newInstance(p1: Int): Fragment {
-            val fragment = JobListFragment.newInstance()
-            val bundle = Bundle()
-            bundle.putInt(PARAM_ONE_KEY, p1)
-            fragment.arguments = bundle
-
-            return fragment
-        }
+        fun newInstance() = JobListFragment().apply { retainInstance = true }
     }
 
 }
