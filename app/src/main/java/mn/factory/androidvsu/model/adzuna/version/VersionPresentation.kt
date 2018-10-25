@@ -1,4 +1,4 @@
-package mn.factory.androidvsu.model.adzuna
+package mn.factory.androidvsu.model.adzuna.version
 
 import mn.factory.androidvsu.model.ItemPresentation
 

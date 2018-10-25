@@ -5,7 +5,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import mn.factory.androidvsu.model.adzuna.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.domain.adzuna.interactor.GetJobsInteractor
 import mn.factory.domain.adzuna.interactor.request.GetJobsRequest

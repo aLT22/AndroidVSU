@@ -2,7 +2,7 @@ package mn.factory.androidvsu.di
 
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMapper
-import mn.factory.androidvsu.ui.adapter.rv.JobsRecyclerAdapter
+import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityViewModel
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListViewModel
 import mn.factory.data.api.adzuna.RepositoryImpl

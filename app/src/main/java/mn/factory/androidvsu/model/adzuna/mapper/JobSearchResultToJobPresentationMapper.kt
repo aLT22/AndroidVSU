@@ -1,7 +1,7 @@
 package mn.factory.androidvsu.model.adzuna.mapper
 
-import mn.factory.androidvsu.model.adzuna.JobPresentation
-import mn.factory.androidvsu.model.adzuna.JobResultPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobResultPresentation
 import mn.factory.domain.adzuna.model.JobSearchResults
 import mn.factory.domain.adzuna.model.Result
 import mn.factory.domain.utils.Mapper

@@ -16,8 +16,8 @@ import com.android.databinding.library.baseAdapters.BR
 import kotlinx.android.synthetic.main.fragment_job_list.*
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobListBinding
-import mn.factory.androidvsu.model.adzuna.JobPresentation
-import mn.factory.androidvsu.ui.adapter.rv.JobsRecyclerAdapter
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
+import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.utils.listener.EndlessScrollListener
 import org.koin.android.ext.android.inject
 

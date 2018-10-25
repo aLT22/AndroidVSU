@@ -1,4 +1,4 @@
-package mn.factory.androidvsu.model.adzuna
+package mn.factory.androidvsu.model.adzuna.job
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
@@ -16,10 +16,8 @@ class JobPresentationViewModel(
     val longitude: ObservableField<String?> = ObservableField(jobPresentation.longitude.toString())
     val company: ObservableField<String?> = ObservableField(jobPresentation.company?.displayName)
     val location: ObservableField<String?> = ObservableField(jobPresentation.location?.displayName)
-    val salary: ObservableField<String?> =
-            ObservableField(
-                    "${jobPresentation.salaryMin}£ - ${jobPresentation.salaryMax}£"
-            )
+    val salaryMin: ObservableField<String?> = ObservableField(jobPresentation.salaryMin.toString())
+    val salaryMax: ObservableField<String?> = ObservableField(jobPresentation.salaryMax.toString())
 
     companion object {
         const val TITLE = "TITLE"
@@ -28,7 +26,7 @@ class JobPresentationViewModel(
         const val LATITUDE = "LATITUDE"
         const val LONGITUDE = "LONGITUDE"
         const val LOCATION = "LOCATION"
-        const val SALARY_FROM = "SALARY_FROM"
-        const val SALARY_TO = "SALARY_TO"
+        const val SALARY_MIN = "SALARY_MIN"
+        const val SALARY_MAX = "SALARY_MAX"
     }
 }

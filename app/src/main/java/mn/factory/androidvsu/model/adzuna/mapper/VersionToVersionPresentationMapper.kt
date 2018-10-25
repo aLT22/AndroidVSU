@@ -1,6 +1,6 @@
 package mn.factory.androidvsu.model.adzuna.mapper
 
-import mn.factory.androidvsu.model.adzuna.VersionPresentation
+import mn.factory.androidvsu.model.adzuna.version.VersionPresentation
 import mn.factory.domain.adzuna.model.Version
 import mn.factory.domain.utils.Mapper
 

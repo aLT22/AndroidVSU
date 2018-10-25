@@ -1,13 +1,14 @@
-package mn.factory.androidvsu.ui.adapter.rv
+package mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs
 
 import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.Observable
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.model.ItemPresentation
-import mn.factory.androidvsu.model.adzuna.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
+import mn.factory.androidvsu.ui.adapter.rv.BaseRecyclerAdapter
+import mn.factory.androidvsu.ui.adapter.rv.adzuna.diffutils.JobListDiffUtil
 import mn.factory.domain.utils.RxSchedulers
-import java.util.*
 
 /**
  * Created by Turkin A. on 07/10/2018.
@@ -16,7 +17,7 @@ class JobsRecyclerAdapter(
         private val rxSchedulers: RxSchedulers
 ) : BaseRecyclerAdapter() {
 
-    private var jobs: LinkedList<JobPresentation> = LinkedList()
+    private var jobs: ArrayList<JobPresentation> = ArrayList()
 
     override fun getItemPresentationForPosition(position: Int): ItemPresentation? = jobs[position]
 
@@ -34,13 +35,14 @@ class JobsRecyclerAdapter(
             jobs.addAll(items as Collection<JobPresentation>)
             notifyItemRangeInserted(0, items.size)
         } else {
-            jobs = items as LinkedList<JobPresentation>
             Observable
-                    .fromCallable(JobListDiffUtil(jobs, items))
+                    .fromCallable(JobListDiffUtil(jobs, items as ArrayList<JobPresentation>))
                     .subscribeOn(rxSchedulers.computation())
                     .observeOn(rxSchedulers.ui())
                     .subscribe(
                             {
+                                jobs.clear()
+                                jobs.addAll(items)
                                 it.dispatchUpdatesTo(this)
                             },
                             {

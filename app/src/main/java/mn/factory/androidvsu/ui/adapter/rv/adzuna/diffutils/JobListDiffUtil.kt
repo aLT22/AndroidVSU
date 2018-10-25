@@ -1,7 +1,9 @@
-package mn.factory.androidvsu.ui.adapter.rv
+package mn.factory.androidvsu.ui.adapter.rv.adzuna.diffutils
 
+import android.os.Bundle
 import android.support.v7.util.DiffUtil
-import mn.factory.androidvsu.model.adzuna.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentationViewModel
 import java.util.concurrent.Callable
 
 /**
@@ -38,9 +40,9 @@ class JobListDiffUtil(
                 oldJob.title == newJob.title
     }
 
-    /*override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         val oldJob = jobs[oldItemPosition]
-        val newJob = items[newItemPosition] as JobPresentation
+        val newJob = items[newItemPosition]
         val diffBundle = Bundle()
 
         if (oldJob.title != newJob.title) diffBundle.putString(JobPresentationViewModel.TITLE, newJob.title)
@@ -49,13 +51,13 @@ class JobListDiffUtil(
         if (oldJob.latitude != newJob.latitude) diffBundle.putDouble(JobPresentationViewModel.LATITUDE, newJob.latitude ?: 0.0)
         if (oldJob.longitude != newJob.longitude) diffBundle.putDouble(JobPresentationViewModel.LONGITUDE, newJob.longitude ?: 0.0)
         if (oldJob.location != newJob.location) diffBundle.putString(JobPresentationViewModel.LOCATION, newJob.location?.displayName ?: "")
-        if (oldJob.salaryMin != newJob.salaryMin) diffBundle.putDouble(JobPresentationViewModel.SALARY_FROM, newJob.salaryMin ?: 0.0)
-        if (oldJob.salaryMax != newJob.salaryMax) diffBundle.putDouble(JobPresentationViewModel.SALARY_TO, newJob.salaryMax ?: 0.0)
+        if (oldJob.salaryMin != newJob.salaryMin) diffBundle.putDouble(JobPresentationViewModel.SALARY_MIN, newJob.salaryMin ?: 0.0)
+        if (oldJob.salaryMax != newJob.salaryMax) diffBundle.putDouble(JobPresentationViewModel.SALARY_MAX, newJob.salaryMax ?: 0.0)
 
         if (diffBundle.size() == 0) return null
 
         return diffBundle
-    }*/
+    }
 
     override fun call(): DiffUtil.DiffResult = DiffUtil.calculateDiff(this)
 

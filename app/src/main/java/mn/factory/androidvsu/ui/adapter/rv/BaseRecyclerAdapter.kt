@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import mn.factory.androidvsu.model.ItemPresentation
-import mn.factory.androidvsu.model.adzuna.JobPresentation
-import mn.factory.androidvsu.model.adzuna.JobPresentationViewModel
+import mn.factory.androidvsu.model.adzuna.job.JobPresentation
+import mn.factory.androidvsu.model.adzuna.job.JobPresentationViewModel
 
 /**
  * Created by Turkin A. on 07/10/2018.
