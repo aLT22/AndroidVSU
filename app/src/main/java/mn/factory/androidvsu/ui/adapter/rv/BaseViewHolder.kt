@@ -2,11 +2,11 @@ package mn.factory.androidvsu.ui.adapter.rv
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ViewDataBinding
-import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.android.databinding.library.baseAdapters.BR
 import io.reactivex.subjects.PublishSubject
 import mn.factory.androidvsu.databinding.ItemJobBinding
+import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.JobPresentation
 import mn.factory.androidvsu.model.adzuna.JobPresentationViewModel
 
@@ -24,7 +24,10 @@ class BaseViewHolder(
     //todo: add these kind of animation into the project
     //https://proandroiddev.com/implement-google-inbox-style-animation-on-android-18c261baeda6
 
-    fun bind(anyObject: Any?, publishSubject: PublishSubject<Any>, viewModel: ViewModel, payloads: MutableList<Any>?) {
+    fun bind(anyObject: ItemPresentation?,
+             publishSubject: PublishSubject<ItemPresentation>,
+             viewModel: ViewModel,
+             payloads: MutableList<Any>?) {
         when (anyObject) {
             is JobPresentation -> {
                 bindJobs(anyObject, publishSubject, viewModel, payloads)
@@ -36,7 +39,10 @@ class BaseViewHolder(
         mBinding.executePendingBindings()
     }
 
-    private fun bindJobs(job: JobPresentation, publishSubject: PublishSubject<Any>, viewModel: ViewModel, payloads: MutableList<*>?) {
+    private fun bindJobs(job: JobPresentation,
+                         publishSubject: PublishSubject<ItemPresentation>,
+                         viewModel: ViewModel,
+                         payloads: MutableList<Any>?) {
         mViewModel = viewModel as JobPresentationViewModel
         mBinding.setVariable(BR.vm, mViewModel)
 

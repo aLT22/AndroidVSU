@@ -1,5 +1,6 @@
 package mn.factory.androidvsu.model.adzuna
 
+import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.domain.adzuna.model.Company
 import mn.factory.domain.adzuna.model.Location
 
@@ -17,4 +18,4 @@ data class JobPresentation(
         val location: Location?,
         val salaryMin: Double?,
         val salaryMax: Double?
-)
+) : ItemPresentation

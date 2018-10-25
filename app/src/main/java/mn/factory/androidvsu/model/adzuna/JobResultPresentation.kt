@@ -1,5 +1,7 @@
 package mn.factory.androidvsu.model.adzuna
 
+import mn.factory.androidvsu.model.ItemPresentation
+
 /**
  * Created by Turkin A. on 07/10/2018.
  */
@@ -7,4 +9,4 @@ package mn.factory.androidvsu.model.adzuna
 data class JobResultPresentation(
         val count: Int?,
         val results: List<JobPresentation>?
-)
+) : ItemPresentation

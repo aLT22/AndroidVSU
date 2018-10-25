@@ -57,7 +57,6 @@ class JobListFragment : Fragment() {
 
         mViewModel.getJobs().observe(this, Observer {
             mJobsAdapter.setJobs(it ?: emptyList<JobPresentation>())
-            mJobsAdapter.notifyDataSetChanged()
         })
 
         mViewModel.loading.observe(this, Observer {
@@ -69,11 +68,6 @@ class JobListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mJobsAdapter.clickObservable.subscribe {
-            val jobPresentation = it as JobPresentation
-            Toast.makeText(activity, jobPresentation.id.toString(), Toast.LENGTH_SHORT).show()
-        }
-
         jobList?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = mJobsAdapter
@@ -82,6 +76,11 @@ class JobListFragment : Fragment() {
                 mEndlessScrollListener?.mLayoutManager = it
             }
             addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
+        }
+
+        mJobsAdapter.clickObservable.subscribe {
+            val jobPresentation = it as JobPresentation
+            Toast.makeText(activity, jobPresentation.id.toString(), Toast.LENGTH_SHORT).show()
         }
 
         swipeRefreshLayout.setOnRefreshListener {

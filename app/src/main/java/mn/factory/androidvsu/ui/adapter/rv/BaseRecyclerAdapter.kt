@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.JobPresentation
 import mn.factory.androidvsu.model.adzuna.JobPresentationViewModel
 
@@ -17,8 +18,8 @@ import mn.factory.androidvsu.model.adzuna.JobPresentationViewModel
 
 abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private val clickSubject = PublishSubject.create<Any>()
-    val clickObservable: Observable<Any> = clickSubject
+    private val clickSubject = PublishSubject.create<ItemPresentation>()
+    val clickObservable: Observable<ItemPresentation> = clickSubject
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BaseViewHolder {
         val binding =
@@ -40,19 +41,19 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         return getLayoutIdForPosition(position) ?: -1
     }
 
-    protected abstract fun getAnyObjectForPosition(position: Int): Any?
+    protected abstract fun getItemPresentationForPosition(position: Int): ItemPresentation?
 
     @LayoutRes
     protected abstract fun getLayoutIdForPosition(position: Int): Int?
 
-    protected abstract fun setItems(items: List<*>)
+    protected abstract fun setItems(items: Collection<ItemPresentation>)
 
     private fun bindViewHolder(holder: BaseViewHolder, position: Int, payloads: MutableList<Any>?) {
-        val anyObject = getAnyObjectForPosition(position)
+        val itemPresentation = getItemPresentationForPosition(position)
 
-        when (anyObject) {
+        when (itemPresentation) {
             is JobPresentation -> {
-                holder.bind(anyObject, clickSubject, JobPresentationViewModel(anyObject), payloads)
+                holder.bind(itemPresentation, clickSubject, JobPresentationViewModel(itemPresentation), payloads)
             }
         }
     }
