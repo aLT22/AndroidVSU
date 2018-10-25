@@ -19,10 +19,6 @@ open class BaseViewHolder(
         viewDataBinding.root
 ) {
     private val mBinding = viewDataBinding
-    private lateinit var mViewModel: ViewModel
-
-    //todo: add these kind of animation into the project
-    //https://proandroiddev.com/implement-google-inbox-style-animation-on-android-18c261baeda6
 
     fun bind(anyObject: ItemPresentation?,
              publishSubject: PublishSubject<ItemPresentation>,

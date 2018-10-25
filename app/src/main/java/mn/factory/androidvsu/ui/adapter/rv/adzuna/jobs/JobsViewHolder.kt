@@ -21,6 +21,9 @@ class JobsViewHolder(
         private val itemJobBinding: ItemJobBinding
 ) : BaseViewHolder(itemJobBinding) {
 
+    //todo: add these kind of animation into the project
+    //https://proandroiddev.com/implement-google-inbox-style-animation-on-android-18c261baeda6
+
     @SuppressLint("SetTextI18n")
     fun bind(job: JobPresentation,
              publishSubject: PublishSubject<ItemPresentation>,
