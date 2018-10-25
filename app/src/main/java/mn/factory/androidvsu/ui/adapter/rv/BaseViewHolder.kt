@@ -2,7 +2,9 @@ package mn.factory.androidvsu.ui.adapter.rv
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
+import android.content.Intent
 import android.databinding.ViewDataBinding
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -12,6 +14,7 @@ import mn.factory.androidvsu.databinding.ItemJobBinding
 import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentationViewModel
+import java.util.*
 
 /**
  * Created by Turkin A. on 07/10/2018.
@@ -51,7 +54,15 @@ class BaseViewHolder(
         mBinding.setVariable(BR.vm, mViewModel)
 
         mBinding as ItemJobBinding
+
+        //Set listeners
         mBinding.root.setOnClickListener { publishSubject.onNext(job) }
+        mBinding.punson.setOnClickListener { startMaps(mBinding, job.latitude, job.longitude, job.company?.displayName) }
+        mBinding.latitude.setOnClickListener { startMaps(mBinding, job.latitude, job.longitude, job.company?.displayName) }
+        mBinding.longitude.setOnClickListener { startMaps(mBinding, job.latitude, job.longitude, job.company?.displayName) }
+        mBinding.location.setOnClickListener { startMaps(mBinding, job.latitude, job.longitude, job.company?.displayName) }
+
+        //Bind views
         bindSalary(mBinding, job.salaryMin, job.salaryMax)
         bindLocationCoordinates(mBinding, job.latitude, job.longitude)
 
@@ -60,6 +71,12 @@ class BaseViewHolder(
         mBinding.company.isSelected = true
         mBinding.location.isSelected = true
 
+        applyPayloads(payloads, mBinding, job)
+    }
+
+    private fun applyPayloads(payloads: MutableList<Any>?,
+                              mBinding: ItemJobBinding,
+                              job: JobPresentation) {
         if (payloads != null && payloads.size != 0) {
             val jobPayloadsBundle = payloads[0] as Bundle
             for (key in jobPayloadsBundle.keySet()) {
@@ -131,5 +148,18 @@ class BaseViewHolder(
 
             binding.punson.visibility = View.VISIBLE
         }
+    }
+
+    private fun startMaps(binding: ItemJobBinding,
+                          latitude: Double?,
+                          longitude: Double?,
+                          companyName: String?) {
+        val uri = String.format(Locale.getDefault(), MAPS_PATTERN, latitude, longitude, latitude, longitude, companyName)
+        val mapsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        binding.root.context.startActivity(mapsIntent)
+    }
+
+    companion object {
+        private const val MAPS_PATTERN = "geo:%f,%f?q=%f,%f(%s)"
     }
 }
