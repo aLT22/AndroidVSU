@@ -2,6 +2,7 @@ package mn.factory.androidvsu.ui.main
 
 import android.arch.lifecycle.ViewModel
 
+
 /**
  * Created by Turkin A. on 06/10/2018.
  */

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/jobListFragment">
+
+    <fragment
+        android:id="@+id/jobListFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListFragment"
+        android:label="JobListFragment">
+        <action
+            android:id="@+id/action_jobListFragment_to_jobDetailsFragment"
+            app:destination="@id/jobDetailsFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/jobDetailsFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsFragment"
+        android:label="JobDetailsFragment"/>
+</navigation>

@@ -5,8 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.android.databinding.library.baseAdapters.BR
 import io.reactivex.subjects.PublishSubject
+import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.databinding.ItemJobBinding
 import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation

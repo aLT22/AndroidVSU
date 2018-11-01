@@ -16,8 +16,6 @@ class JobPresentationViewModel(
     val longitude: ObservableField<String?> = ObservableField(jobPresentation.longitude.toString())
     val company: ObservableField<String?> = ObservableField(jobPresentation.company?.displayName)
     val location: ObservableField<String?> = ObservableField(jobPresentation.location?.displayName)
-    val salaryMin: ObservableField<String?> = ObservableField(jobPresentation.salaryMin.toString())
-    val salaryMax: ObservableField<String?> = ObservableField(jobPresentation.salaryMax.toString())
 
     companion object {
         const val TITLE = "TITLE"

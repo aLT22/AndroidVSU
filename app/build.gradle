@@ -25,30 +25,40 @@ android {
 }
 
 dependencies {
+    //FileTree
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //Additional modules
     implementation project(ProjectModules.data)
     implementation project(ProjectModules.domain)
 
+    //Test deps
     testImplementation TestDependencies.jUnit
     androidTestImplementation TestDependencies.runner
     androidTestImplementation TestDependencies.espresso
 
+    //kotlin features
     implementation ProjectDependencies.kotlin
 
+    //Support libs
     implementation ProjectDependencies.supportAppCompatv7
     implementation ProjectDependencies.constraintLayout
     implementation ProjectDependencies.cardView
     implementation ProjectDependencies.recyclerView
 
+    //Koin
     implementation ProjectDependencies.koinAndroid
     implementation ProjectDependencies.koinAndroidViewModel
 
+    //ReactiveX
     implementation ProjectDependencies.rxJava
     implementation ProjectDependencies.rxAndroid
 
+    //Architecture deps
     implementation ProjectDependencies.lifecycle
     kapt ProjectDependencies.lifecycleCompiler
 
-    implementation ProjectDependencies.paging
+    //Navigation deps
+    implementation ProjectDependencies.navigationFragment
+    implementation ProjectDependencies.navigationUi
 }

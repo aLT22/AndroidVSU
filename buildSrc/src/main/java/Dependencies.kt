@@ -10,6 +10,7 @@ object ProjectModules {
 
 object ProjectDependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
     val supportAppCompatv7 = "com.android.support:appcompat-v7:${Versions.appcompat}"
     val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
@@ -18,6 +19,7 @@ object ProjectDependencies {
 
     val koinAndroid = "org.koin:koin-android:${Versions.koin}"
     val koinAndroidViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
+    val koinAndroidScope = "org.koin:koin-android-scope:${Versions.koin}"
 
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val rxJava2Adapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
@@ -29,7 +31,8 @@ object ProjectDependencies {
 
     val lifecycle = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
     val lifecycleCompiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
-    val paging = "android.arch.paging:runtime:${Versions.paging}"
+    val navigationFragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
+    val navigationUi = "android.arch.navigation:navigation-ui:${Versions.navigation}"
 }
 
 object TestDependencies {
@@ -41,6 +44,7 @@ object TestDependencies {
 object Versions {
     val gradleAndroidPlugin = "3.2.0"
     val kotlin = "1.2.71"
+    val ktx = "1.0.0"
 
     val compileSdk = 28
     val targetSdk = 28
@@ -67,5 +71,5 @@ object Versions {
     val rxAndroid = "2.1.0"
 
     val lifecycle = "1.1.1"
-    val paging = "1.0.0"
+    val navigation = "1.0.0-alpha07"
 }

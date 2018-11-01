@@ -2,10 +2,13 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 dependencies {
+    //FileTree
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //Koin deps
     implementation ProjectDependencies.koinAndroid
 
+    //ReactiveX
     implementation ProjectDependencies.rxJava
 }
 
