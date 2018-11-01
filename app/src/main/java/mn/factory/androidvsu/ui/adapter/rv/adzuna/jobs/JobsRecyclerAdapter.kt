@@ -29,6 +29,7 @@ class JobsRecyclerAdapter(
         setJobs(items)
     }
 
+    @Suppress("UNCHECKED_CAST")
     @SuppressLint("CheckResult")
     fun setJobs(items: Collection<ItemPresentation>) {
         if (jobs.isEmpty()) {
