@@ -41,6 +41,7 @@ class JobDetailsFragment : Fragment() {
 
     companion object {
         const val TAG = "JobDetailsFragment"
+        const val ID = R.id.jobDetailsFragment
 
         private const val KEY_JOB = "JOB"
 

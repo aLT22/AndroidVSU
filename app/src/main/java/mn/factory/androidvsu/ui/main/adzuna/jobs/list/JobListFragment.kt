@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import mn.factory.androidvsu.databinding.FragmentJobListBinding
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivity
-import mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsFragment
 import mn.factory.androidvsu.utils.listener.EndlessScrollListener
 import org.koin.android.ext.android.inject
 
@@ -79,9 +79,14 @@ class JobListFragment : Fragment() {
             addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
         }
 
-        mJobsAdapter.clickObservable.subscribe {
-            (activity as MainActivity).showFragment(JobDetailsFragment.newInstance(it as JobPresentation), JobDetailsFragment.TAG)
-        }
+        mJobsAdapter.clickObservable.subscribe(
+                {
+                    (activity as MainActivity).showFragment(ACTION_TO_DETAILS)
+                },
+                {
+                    Log.e(TAG, it.localizedMessage)
+                }
+        )
 
         swipeRefreshLayout.setOnRefreshListener {
             mEndlessScrollListener?.let {
@@ -93,8 +98,7 @@ class JobListFragment : Fragment() {
 
     companion object {
         const val TAG = "JobListFragment"
-
-        const val PARAM_ONE_KEY = "PARAM_ONE_KEY"
+        const val ACTION_TO_DETAILS = R.id.action_jobListFragment_to_jobDetailsFragment
 
         fun newInstance() = JobListFragment().apply { retainInstance = true }
     }

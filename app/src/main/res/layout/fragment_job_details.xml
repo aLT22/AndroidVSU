@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,6 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:subtitleTextColor="@color/colorGray"
+            app:title="Details"
+            app:titleTextColor="@color/colorWhite"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
