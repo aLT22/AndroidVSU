@@ -1,4 +1,4 @@
-package mn.factory.data.utils
+package mn.factory.data.api.adzuna.interceptors
 
 import mn.factory.data.BuildConfig
 import okhttp3.Interceptor
