@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         mNavigationController = Navigation.findNavController(this, R.id.hostFragment)
     }
 
-    fun showFragment(@IdRes actionId: Int) {
-        mNavigationController?.let { it.navigate(actionId) }
+    fun showFragment(@IdRes actionId: Int, bundle: Bundle) {
+        mNavigationController?.let { it.navigate(actionId, bundle) }
     }
 
     companion object {

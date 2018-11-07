@@ -16,6 +16,7 @@ import com.android.databinding.library.baseAdapters.BR
 import kotlinx.android.synthetic.main.fragment_job_list.*
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobListBinding
+import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivity
@@ -81,7 +82,7 @@ class JobListFragment : Fragment() {
 
         mJobsAdapter.clickObservable.subscribe(
                 {
-                    (activity as MainActivity).showFragment(ACTION_TO_DETAILS)
+                    (activity as MainActivity).showFragment(ACTION_TO_DETAILS, sharedBundle(it))
                 },
                 {
                     Log.e(TAG, it.localizedMessage)
@@ -96,9 +97,20 @@ class JobListFragment : Fragment() {
         }
     }
 
+    private fun sharedBundle(jobPresentation: ItemPresentation): Bundle {
+        val job = jobPresentation as JobPresentation
+
+        val arguments = Bundle()
+        arguments.putParcelable(KEY_JOB, job)
+
+        return arguments
+    }
+
     companion object {
         const val TAG = "JobListFragment"
         const val ACTION_TO_DETAILS = R.id.action_jobListFragment_to_jobDetailsFragment
+
+        private const val KEY_JOB = "JOB"
 
         fun newInstance() = JobListFragment().apply { retainInstance = true }
     }
