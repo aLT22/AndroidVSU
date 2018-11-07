@@ -39,7 +39,7 @@ class JobListViewModel(
                 .execute(jobsInteractorRequest)
                 .doOnSubscribe { loading.postValue(true) }
                 .map { mapperJobs.map(it) }
-                .retry(5)
+                .retry(1)
                 .subscribe(
                         { entity ->
                             if (isRefresh) {
@@ -51,6 +51,7 @@ class JobListViewModel(
                         },
                         {
                             Log.e(TAG, it.message)
+                            loading.postValue(false)
                         },
                         {
                             loading.postValue(false)
