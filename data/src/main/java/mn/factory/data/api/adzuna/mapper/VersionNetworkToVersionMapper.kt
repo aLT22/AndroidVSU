@@ -1,6 +1,6 @@
 package mn.factory.data.api.adzuna.mapper
 
-import mn.factory.data.api.adzuna.model.VersionNetwork
+import mn.factory.data.api.adzuna.model.version.VersionNetwork
 import mn.factory.domain.adzuna.model.Version
 import mn.factory.domain.utils.Mapper
 

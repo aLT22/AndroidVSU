@@ -1,9 +1,9 @@
-package mn.factory.domain.adzuna.interactor
+package mn.factory.domain.adzuna.interactors
 
 import io.reactivex.Observable
-import mn.factory.domain.adzuna.Repository
+import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 import mn.factory.domain.adzuna.model.JobSearchResults
-import mn.factory.domain.adzuna.interactor.request.GetJobsRequest
+import mn.factory.domain.adzuna.repositories.JobRepository
 import mn.factory.domain.utils.Interactor
 import mn.factory.domain.utils.RxSchedulers
 
@@ -11,7 +11,7 @@ import mn.factory.domain.utils.RxSchedulers
  * Created by Turkin A. on 07/10/2018.
  */
 class GetJobsInteractor(
-        private val repository: Repository,
+        private val repository: JobRepository,
         private val schedulers: RxSchedulers
 ) : Interactor<GetJobsRequest, JobSearchResults> {
 
@@ -19,6 +19,6 @@ class GetJobsInteractor(
             repository
                     .getJobs(request.country, request.page, request.resultsPerPage)
                     .subscribeOn(schedulers.io())
-                    .observeOn(schedulers.ui())
                     .toObservable()
+                    .observeOn(schedulers.ui())
 }

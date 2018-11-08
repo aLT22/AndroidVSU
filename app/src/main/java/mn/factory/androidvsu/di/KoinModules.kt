@@ -1,20 +1,21 @@
 package mn.factory.androidvsu.di
 
-import android.arch.lifecycle.ViewModel
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMapper
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityViewModel
 import mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsViewModel
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListViewModel
-import mn.factory.data.api.adzuna.RepositoryImpl
 import mn.factory.data.api.adzuna.mapper.JobSearchResultNetworkToJobSearchResultMapper
 import mn.factory.data.api.adzuna.mapper.VersionNetworkToVersionMapper
+import mn.factory.data.api.adzuna.repositories.JobRepositoryImpl
+import mn.factory.data.api.adzuna.repositories.VersionRepositoryImpl
 import mn.factory.data.utils.RxSchedulersImpl
-import mn.factory.domain.adzuna.Repository
-import mn.factory.domain.adzuna.interactor.GetJobsInteractor
-import mn.factory.domain.adzuna.interactor.GetVersionInteractor
-import mn.factory.domain.adzuna.interactor.request.GetJobsRequest
+import mn.factory.domain.adzuna.interactors.GetJobsInteractor
+import mn.factory.domain.adzuna.interactors.GetVersionInteractor
+import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
+import mn.factory.domain.adzuna.repositories.JobRepository
+import mn.factory.domain.adzuna.repositories.VersionRepository
 import mn.factory.domain.utils.RxSchedulers
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
@@ -24,11 +25,11 @@ import org.koin.dsl.module.module
  * Created by Turkin A. on 05/10/2018.
  */
 
-val appModule : Module= module {
+val appModule: Module = module {
     single<RxSchedulers> { RxSchedulersImpl() }
 }
 
-val viewModule : Module = module {
+val viewModule: Module = module {
     factory { JobsRecyclerAdapter(get()) }
 
     //Activity VMs
@@ -46,7 +47,8 @@ val interactorsModule = module {
 }
 
 val repositoryModule = module {
-    single<Repository> { RepositoryImpl(get(), get(), get()) }
+    single<JobRepository> { JobRepositoryImpl(get(), get()) }
+    single<VersionRepository> { VersionRepositoryImpl(get(), get()) }
 }
 
 val mappersModule = module {

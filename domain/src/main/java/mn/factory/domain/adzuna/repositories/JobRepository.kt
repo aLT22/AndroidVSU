@@ -1,15 +1,12 @@
-package mn.factory.domain.adzuna
+package mn.factory.domain.adzuna.repositories
 
 import io.reactivex.Single
 import mn.factory.domain.adzuna.model.JobSearchResults
-import mn.factory.domain.adzuna.model.Version
 
 /**
- * Created by Turkin A. on 05/10/2018.
+ * Created by Turkin A. on 08/11/2018.
  */
-interface Repository {
-
-    fun getVersion(): Single<Version>
+interface JobRepository : Repository {
 
     fun getJobs(country: String, page: Int, resultsPerPage: Int): Single<JobSearchResults>
 

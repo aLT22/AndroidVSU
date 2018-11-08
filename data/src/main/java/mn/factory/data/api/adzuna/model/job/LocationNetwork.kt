@@ -1,4 +1,4 @@
-package mn.factory.data.api.adzuna.model
+package mn.factory.data.api.adzuna.model.job
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName
  * Created by Turkin A. on 07/10/2018.
  */
 
-data class CategoryNetwork(
-        @SerializedName("label")
+data class LocationNetwork(
+        @SerializedName("display_name")
         @Expose
-        val label: String?,
+        val displayName: String?,
         @SerializedName("__CLASS__")
         @Expose
         val classType: String?,
-        @SerializedName("tag")
+        @SerializedName("area")
         @Expose
-        val tag: String?
+        val area: List<String>?
 )

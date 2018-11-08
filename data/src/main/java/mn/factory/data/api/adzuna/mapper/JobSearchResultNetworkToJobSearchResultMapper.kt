@@ -1,6 +1,6 @@
 package mn.factory.data.api.adzuna.mapper
 
-import mn.factory.data.api.adzuna.model.*
+import mn.factory.data.api.adzuna.model.job.*
 import mn.factory.domain.adzuna.model.*
 import mn.factory.domain.utils.Mapper
 

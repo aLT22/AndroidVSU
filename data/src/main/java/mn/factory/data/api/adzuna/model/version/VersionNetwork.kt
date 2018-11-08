@@ -1,4 +1,4 @@
-package mn.factory.data.api.adzuna.model
+package mn.factory.data.api.adzuna.model.version
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

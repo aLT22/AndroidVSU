@@ -1,4 +1,4 @@
-package mn.factory.domain.adzuna.interactor.request
+package mn.factory.domain.adzuna.interactors.request
 
 import mn.factory.domain.utils.InteractorRequest
 
@@ -8,5 +8,5 @@ import mn.factory.domain.utils.InteractorRequest
 class GetJobsRequest(
         var country: String = "ru",
         var page: Int = 1,
-        var resultsPerPage: Int = 10
+        var resultsPerPage: Int = 20
 ) : InteractorRequest
