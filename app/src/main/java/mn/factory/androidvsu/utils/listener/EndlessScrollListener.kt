@@ -10,9 +10,9 @@ import mn.factory.androidvsu.utils.exceptions.InvalidLayoutManagerException
 /**
  * Created by Turkin A. on 11/10/2018.
  */
-abstract class EndlessScrollListener() : RecyclerView.OnScrollListener() {
+abstract class EndlessScrollListener : RecyclerView.OnScrollListener() {
 
-    var visibleThreshold: Int = 5
+    var visibleThreshold: Int = 10
     var currentPage: Int = 1
     var previousTotalItemCount: Int = 0
     var startingPageIndex: Int = 1
@@ -93,5 +93,14 @@ abstract class EndlessScrollListener() : RecyclerView.OnScrollListener() {
             }
         }
         return maxSize
+    }
+
+    fun reset() {
+        this.visibleThreshold = 10
+        this.currentPage = 1
+        this.previousTotalItemCount = 0
+        this.startingPageIndex = 1
+
+        this.loading.postValue(true)
     }
 }

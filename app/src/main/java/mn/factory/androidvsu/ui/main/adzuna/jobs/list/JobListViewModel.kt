@@ -7,8 +7,8 @@ import android.arch.lifecycle.ViewModel
 import android.util.Log
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
-import mn.factory.domain.adzuna.interactor.GetJobsInteractor
-import mn.factory.domain.adzuna.interactor.request.GetJobsRequest
+import mn.factory.domain.adzuna.interactors.GetJobsInteractor
+import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 
 /**
  * Created by Turkin A. on 12/10/2018.
@@ -28,7 +28,7 @@ class JobListViewModel(
 
     fun resetRequest() {
         jobsInteractorRequest.apply {
-            resultsPerPage = 10
+            resultsPerPage = 20
             page = 1
         }
     }

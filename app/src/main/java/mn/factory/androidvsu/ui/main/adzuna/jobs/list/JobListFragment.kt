@@ -91,6 +91,7 @@ class JobListFragment : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             mEndlessScrollListener?.let {
+                it.reset()
                 mViewModel.resetRequest()
                 mViewModel.fetchJobs(true)
             }
