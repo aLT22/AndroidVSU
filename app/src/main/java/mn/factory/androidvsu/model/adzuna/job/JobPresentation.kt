@@ -19,7 +19,11 @@ data class JobPresentation(
         val company: Company?,
         val location: Location?,
         val salaryMin: Double?,
-        val salaryMax: Double?
+        val salaryMax: Double?,
+        val contractTime: String?,
+        val contractType: String?,
+        val created: String?,
+        val redirectUrl: String?
 ) : ItemPresentation, Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
@@ -30,7 +34,11 @@ data class JobPresentation(
             Company(parcel.readString(), parcel.readString()),
             Location(parcel.readString(), parcel.readString(), parcel.createStringArrayList()),
             parcel.readDouble(),
-            parcel.readDouble()
+            parcel.readDouble(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -46,6 +54,10 @@ data class JobPresentation(
         location?.let { parcel.writeStringList(it.area) }
         salaryMin?.let { parcel.writeDouble(it) }
         salaryMax?.let { parcel.writeDouble(it) }
+        contractTime?.let { parcel.writeString(it) }
+        contractType?.let { parcel.writeString(it) }
+        created?.let { parcel.writeString(it) }
+        redirectUrl?.let { parcel.writeString(it) }
     }
 
     override fun describeContents(): Int {

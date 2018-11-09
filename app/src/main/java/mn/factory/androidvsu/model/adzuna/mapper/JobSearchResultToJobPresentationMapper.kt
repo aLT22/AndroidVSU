@@ -32,7 +32,11 @@ class JobSearchResultToJobPresentationMapper : Mapper<JobSearchResults, JobResul
                                     result.company,
                                     result.location,
                                     result.salaryMin,
-                                    result.salaryMax
+                                    result.salaryMax,
+                                    result.contractTime,
+                                    result.contractType,
+                                    result.created,
+                                    result.redirectUrl
                             )
                     )
         }

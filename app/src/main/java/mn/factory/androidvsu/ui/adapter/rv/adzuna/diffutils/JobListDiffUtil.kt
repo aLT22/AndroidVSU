@@ -53,6 +53,9 @@ class JobListDiffUtil(
         if (oldJob.location != newJob.location) diffBundle.putString(JobPresentationViewModel.LOCATION, newJob.location?.displayName ?: "")
         if (oldJob.salaryMin != newJob.salaryMin) diffBundle.putDouble(JobPresentationViewModel.SALARY_MIN, newJob.salaryMin ?: 0.0)
         if (oldJob.salaryMax != newJob.salaryMax) diffBundle.putDouble(JobPresentationViewModel.SALARY_MAX, newJob.salaryMax ?: 0.0)
+        if (oldJob.contractTime != newJob.contractTime) diffBundle.putString(JobPresentationViewModel.CONTRACT_TIME, newJob.contractTime ?: "")
+        if (oldJob.contractType != newJob.contractType) diffBundle.putString(JobPresentationViewModel.CONTRACT_TYPE, newJob.contractType ?: "")
+        if (oldJob.created != newJob.created) diffBundle.putString(JobPresentationViewModel.CREATED, newJob.created ?: "")
 
         if (diffBundle.size() == 0) return null
 
