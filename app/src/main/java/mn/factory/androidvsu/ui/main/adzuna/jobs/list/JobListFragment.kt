@@ -20,7 +20,7 @@ import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivity
-import mn.factory.androidvsu.utils.listener.EndlessScrollListener
+import mn.factory.androidvsu.utils.listeners.EndlessScrollListener
 import org.koin.android.ext.android.inject
 
 class JobListFragment : Fragment() {

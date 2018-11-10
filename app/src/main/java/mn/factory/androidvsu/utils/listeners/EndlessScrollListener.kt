@@ -1,4 +1,4 @@
-package mn.factory.androidvsu.utils.listener
+package mn.factory.androidvsu.utils.listeners
 
 import android.arch.lifecycle.MutableLiveData
 import android.support.v7.widget.GridLayoutManager

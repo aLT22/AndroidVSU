@@ -1,27 +1,31 @@
 package mn.factory.androidvsu.ui.main.adzuna.jobs.details
 
 
+import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.databinding.library.baseAdapters.BR
 import mn.factory.androidvsu.R
+import mn.factory.androidvsu.databinding.FragmentJobDetailsBinding
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import org.koin.android.ext.android.inject
 
 class JobDetailsFragment : Fragment() {
 
     private val mViewModel: JobDetailsViewModel by inject()
-    lateinit var mBinding: ViewDataBinding
+    lateinit var mBinding: FragmentJobDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        arguments?.let {
+            mViewModel.mJobPresentation = it[KEY_JOB] as JobPresentation
+            mViewModel.title.value = mViewModel.mJobPresentation?.title
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,9 +39,9 @@ class JobDetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        arguments?.let {
-            Log.e(TAG, (it[KEY_JOB] as? JobPresentation).toString())
-        }
+        mViewModel.title.observe(this, Observer {
+            mBinding.description.setTitle(it)
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
