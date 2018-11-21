@@ -16,7 +16,7 @@ import org.koin.android.ext.android.inject
 
 class JobDetailsFragment : Fragment() {
 
-    private val mViewModel: JobDetailsViewModel by inject()
+    private val mViewModel: JobDetailsVM by inject()
     lateinit var mBinding: FragmentJobDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

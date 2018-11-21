@@ -5,7 +5,7 @@
 
         <variable
             name="vm"
-            type="mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListViewModel"/>
+            type="mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListVM"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

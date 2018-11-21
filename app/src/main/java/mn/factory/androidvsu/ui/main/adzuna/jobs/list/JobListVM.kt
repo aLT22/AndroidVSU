@@ -13,7 +13,7 @@ import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 /**
  * Created by Turkin A. on 12/10/2018.
  */
-class JobListViewModel(
+class JobListVM(
         private val getJobsInteractor: GetJobsInteractor,
         private val mapperJobs: JobSearchResultToJobPresentationMapper
 ) : ViewModel() {

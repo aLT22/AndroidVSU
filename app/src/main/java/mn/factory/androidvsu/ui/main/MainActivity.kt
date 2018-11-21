@@ -14,7 +14,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mViewModel: MainActivityViewModel by viewModel()
+    private val mViewModel: MainActivityVM by viewModel()
     private lateinit var mBinding: ViewDataBinding
 
     private lateinit var mNavigationController: NavController
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.setLifecycleOwner(this)
         mBinding.setVariable(BR.vm, mViewModel)
 
-        mNavigationController = Navigation.findNavController(this, R.id.hostFragment)
+        mNavigationController = Navigation.findNavController(this, R.id.jobsFragment)
     }
 
     fun showFragment(@IdRes actionId: Int, bundle: Bundle) {

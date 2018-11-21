@@ -21,10 +21,10 @@ abstract class BaseRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     private val clickSubject = PublishSubject.create<ItemPresentation>()
     val clickObservable: Observable<ItemPresentation> = clickSubject
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): BaseViewHolder {
         val binding =
                 DataBindingUtil
-                        .inflate<ViewDataBinding>(LayoutInflater.from(p0.context), p1, p0, false)
+                        .inflate<ViewDataBinding>(LayoutInflater.from(parent.context), position, parent, false)
 
         return BaseViewHolder(binding)
     }

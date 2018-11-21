@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 
 class JobListFragment : Fragment() {
 
-    private val mViewModel: JobListViewModel by inject()
+    private val mViewModel: JobListVM by inject()
     lateinit var mBinding: FragmentJobListBinding
     private val mJobsAdapter: JobsRecyclerAdapter by inject()
 

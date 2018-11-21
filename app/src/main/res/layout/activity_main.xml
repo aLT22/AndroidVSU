@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="mn.factory.androidvsu.ui.main.MainActivityViewModel"/>
+            type="mn.factory.androidvsu.ui.main.MainActivityVM"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -19,16 +19,28 @@
         tools:context=".ui.main.MainActivity">
 
         <fragment
-            android:id="@+id/hostFragment"
+            android:id="@+id/jobsFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/main_activity_graph"/>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrayLight"
+            app:itemBackground="@color/colorGrayLight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/jobsFragment"
+            app:menu="@menu/bottom_navigation_menu"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -7,7 +7,7 @@ import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 /**
  * Created by Turkin A. on 25/10/2018.
  */
-class JobDetailsViewModel : ViewModel() {
+class JobDetailsVM : ViewModel() {
 
     var mJobPresentation: JobPresentation? = null
 
