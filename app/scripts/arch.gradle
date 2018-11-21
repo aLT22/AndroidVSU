@@ -1,0 +1,9 @@
+dependencies {
+    //Architecture deps
+    implementation ProjectDependencies.lifecycle
+    kapt ProjectDependencies.lifecycleCompiler
+
+    //Navigation deps
+    implementation ProjectDependencies.navigationFragment
+    implementation ProjectDependencies.navigationUi
+}
