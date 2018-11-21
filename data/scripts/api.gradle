@@ -1,0 +1,7 @@
+dependencies {
+    //Network libs
+    implementation ProjectDependencies.retrofit
+    implementation ProjectDependencies.rxJava2Adapter
+    implementation ProjectDependencies.gson
+    implementation ProjectDependencies.loggingInterceptor
+}

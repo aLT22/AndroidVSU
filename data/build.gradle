@@ -36,38 +36,9 @@ android {
 
 }
 
-dependencies {
-    //FileTree
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    //Project deps
-    implementation project(ProjectModules.domain)
-
-    //Test deps
-    testImplementation TestDependencies.jUnit
-    androidTestImplementation TestDependencies.runner
-    androidTestImplementation TestDependencies.espresso
-
-    //Kotlin deps
-    implementation ProjectDependencies.kotlin
-
-    //Support libs
-    implementation ProjectDependencies.supportAppCompatv7
-
-    //Koin deps
-    implementation ProjectDependencies.koinAndroid
-
-    //Network libs
-    implementation ProjectDependencies.retrofit
-    implementation ProjectDependencies.rxJava2Adapter
-    implementation ProjectDependencies.gson
-    implementation ProjectDependencies.loggingInterceptor
-
-    //ReactiveX
-    implementation ProjectDependencies.rxJava
-    implementation ProjectDependencies.rxAndroid
-
-    //Lifecycle deps
-    implementation ProjectDependencies.lifecycle
-    kapt ProjectDependencies.lifecycleCompiler
-}
+apply from: 'scripts/core.gradle'
+apply from: 'scripts/support.gradle'
+apply from: 'scripts/di.gradle'
+apply from: 'scripts/api.gradle'
+apply from: 'scripts/rx.gradle'
+apply from: 'scripts/arch.gradle'

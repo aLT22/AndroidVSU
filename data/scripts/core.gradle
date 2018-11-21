@@ -1,0 +1,15 @@
+dependencies {
+    //FileTree
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Project deps
+    implementation project(ProjectModules.domain)
+
+    //Test deps
+    testImplementation TestDependencies.jUnit
+    androidTestImplementation TestDependencies.runner
+    androidTestImplementation TestDependencies.espresso
+
+    //Kotlin deps
+    implementation ProjectDependencies.kotlin
+}
