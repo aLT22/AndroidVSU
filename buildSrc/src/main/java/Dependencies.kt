@@ -31,8 +31,8 @@ object ProjectDependencies {
 
     val lifecycle = "android.arch.lifecycle:extensions:${Versions.lifecycle}"
     val lifecycleCompiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
-    val navigationFragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
-    val navigationUi = "android.arch.navigation:navigation-ui:${Versions.navigation}"
+    val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
 }
 
 object TestDependencies {
