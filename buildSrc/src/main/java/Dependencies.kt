@@ -12,10 +12,12 @@ object ProjectDependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
-    val supportAppCompatv7 = "com.android.support:appcompat-v7:${Versions.appcompat}"
+    val supportAppCompatv7 = "com.android.support:appcompat-v7:${Versions.support}"
     val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
-    val cardView = "com.android.support:cardview-v7:${Versions.appcompat}"
-    val recyclerView = "com.android.support:recyclerview-v7:${Versions.appcompat}"
+    val cardView = "com.android.support:cardview-v7:${Versions.support}"
+    val recyclerView = "com.android.support:recyclerview-v7:${Versions.support}"
+    val design = "com.android.support:design:${Versions.support}"
+    val material = "com.google.android.material:material:${Versions.material}"
 
     val koinAndroid = "org.koin:koin-android:${Versions.koin}"
     val koinAndroidViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
@@ -56,8 +58,9 @@ object Versions {
     val runner = "1.0.2"
     val espresso = "3.0.2"
 
-    val appcompat = "28.0.0"
+    val support = "28.0.0"
     val constraintLayout = "1.1.3"
+    val material = "1.0.0-beta01"
 
     val dagger = "2.16"
     val javaxInject = "1"

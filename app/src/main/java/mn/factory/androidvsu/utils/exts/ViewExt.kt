@@ -11,9 +11,8 @@ import android.view.animation.Transformation
  * Created by Turkin A. on 09/11/2018.
  */
 
-/*
-* View extension block for animations
-* Block starts here
+/**
+* View extension block for animations starts
 * */
 private const val DEFAULT_DURATION = 200L
 private val DEFAULT_INTERPOLATOR = AccelerateDecelerateInterpolator()
@@ -77,6 +76,6 @@ fun View.collapse(): Long {
 
     return transformation.duration
 }
-/*
-* Block ends here
+/**
+* View extension block for animations ends
 * */

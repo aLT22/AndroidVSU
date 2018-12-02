@@ -17,18 +17,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:subtitleTextColor="@color/colorGray"
-            app:title="Details"
-            app:titleTextColor="@color/colorWhite"/>
-
         <mn.factory.androidvsu.ui.custom.CollapsibleTextView
             android:id="@+id/description"
             android:layout_width="match_parent"
@@ -37,7 +25,7 @@
             app:expanded="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             bind:content="@{vm.MJobPresentation.description}"/>
 
     </android.support.constraint.ConstraintLayout>

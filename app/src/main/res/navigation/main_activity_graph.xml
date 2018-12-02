@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
             app:startDestination="@id/jobListFragment">
 
     <fragment
         android:id="@+id/jobListFragment"
         android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListFragment"
-        android:label="JobListFragment">
+        android:label="Jobs"
+        tools:layout="@layout/fragment_job_list">
         <action
             android:id="@+id/action_jobListFragment_to_jobDetailsFragment"
             app:destination="@id/jobDetailsFragment"
@@ -16,9 +18,46 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/jobListFragment"/>
+        <action
+            android:id="@+id/action_jobListFragment_to_jobSettingsFragment"
+            app:destination="@id/jobSettingsFragment"/>
+        <argument
+            android:name="title"
+            android:defaultValue="Jobs"/>
     </fragment>
     <fragment
         android:id="@+id/jobDetailsFragment"
         android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsFragment"
-        android:label="JobDetailsFragment"/>
+        android:label="Job details"
+        tools:layout="@layout/fragment_job_details"/>
+    <fragment
+        android:id="@+id/carListFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.cars.list.CarListFragment"
+        android:label="Cars"
+        tools:layout="@layout/fragment_car_list">
+        <action
+            android:id="@+id/action_carListFragment_to_carDetailsFragment"
+            app:destination="@id/carDetailsFragment"/>
+        <action
+            android:id="@+id/action_carListFragment_to_carSettingsFragment"
+            app:destination="@id/carSettingsFragment"/>
+        <argument
+            android:name="title"
+            android:defaultValue="Cars"/>
+    </fragment>
+    <fragment
+        android:id="@+id/carDetailsFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.cars.details.CarDetailsFragment"
+        android:label="Car details"
+        tools:layout="@layout/fragment_car_details"/>
+    <fragment
+        android:id="@+id/jobSettingsFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.settings.JobSettingsFragment"
+        android:label="Job settings"
+        tools:layout="@layout/fragment_job_settings"/>
+    <fragment
+        android:id="@+id/carSettingsFragment"
+        android:name="mn.factory.androidvsu.ui.main.adzuna.cars.settings.CarSettingsFragment"
+        android:label="Car settings"
+        tools:layout="@layout/fragment_car_settings"/>
 </navigation>

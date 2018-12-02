@@ -7,9 +7,7 @@
 
     <!-- New standard colors -->
     <color name="colorBlack">#000000</color>
-
     <color name="colorWhite">#FFFFFF</color>
-
     <color name="colorGrayLight">#FFE4E4E4</color>
     <color name="colorGray">#FFBEBEBE</color>
     <color name="colorGrayDark">#FF797979</color>
