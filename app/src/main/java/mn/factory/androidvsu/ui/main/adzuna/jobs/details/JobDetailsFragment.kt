@@ -1,14 +1,14 @@
 package mn.factory.androidvsu.ui.main.adzuna.jobs.details
 
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.databinding.library.baseAdapters.BR
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobDetailsBinding
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation

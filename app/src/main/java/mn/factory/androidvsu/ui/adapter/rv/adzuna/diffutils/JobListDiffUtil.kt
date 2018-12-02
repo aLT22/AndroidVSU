@@ -1,7 +1,7 @@
 package mn.factory.androidvsu.ui.adapter.rv.adzuna.diffutils
 
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentationViewModel
 import java.util.concurrent.Callable

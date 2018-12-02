@@ -2,7 +2,6 @@ package mn.factory.androidvsu.ui.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -10,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import androidx.databinding.DataBindingUtil
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.CustomCollapsibleContentLayoutBinding
 import mn.factory.androidvsu.utils.exts.collapse

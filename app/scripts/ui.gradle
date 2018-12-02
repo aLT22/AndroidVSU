@@ -1,8 +1,12 @@
 dependencies {
     //Support libs
-    implementation ProjectDependencies.supportAppCompatv7
-    implementation ProjectDependencies.constraintLayout
-    implementation ProjectDependencies.cardView
-    implementation ProjectDependencies.recyclerView
-    implementation ProjectDependencies.design
+//    implementation ProjectDependencies.supportAppCompatv7
+//    implementation ProjectDependencies.constraintLayout
+//    implementation ProjectDependencies.cardView
+//    implementation ProjectDependencies.recyclerView
+//    implementation ProjectDependencies.design
+    implementation ProjectDependencies.supportAppCompatX
+    implementation ProjectDependencies.constraintLayoutX
+    implementation ProjectDependencies.cardViewX
+    implementation ProjectDependencies.recyclerViewX
 }

@@ -1,10 +1,10 @@
 package mn.factory.androidvsu.ui.custom
 
 import android.content.Context
-import android.databinding.BindingAdapter
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 
 /**
  * Created by Turkin A. on 09/11/2018.

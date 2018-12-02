@@ -1,6 +1,6 @@
 package mn.factory.data.api.adzuna
 
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 import io.reactivex.Single
 import mn.factory.data.api.adzuna.model.car.CarSearchResultsNetwork
 import mn.factory.data.api.adzuna.model.job.JobSearchResultsNetwork

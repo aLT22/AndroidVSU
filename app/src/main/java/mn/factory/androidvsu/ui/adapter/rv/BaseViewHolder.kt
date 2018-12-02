@@ -1,8 +1,8 @@
 package mn.factory.androidvsu.ui.adapter.rv
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.subjects.PublishSubject
 import mn.factory.androidvsu.databinding.ItemJobBinding
 import mn.factory.androidvsu.model.ItemPresentation
@@ -20,6 +20,7 @@ open class BaseViewHolder(
 ) {
     private val mBinding = viewDataBinding
 
+    @Suppress("CAST_NEVER_SUCCEEDS")
     fun bind(anyObject: ItemPresentation?,
              publishSubject: PublishSubject<ItemPresentation>,
              viewModel: ViewModel,

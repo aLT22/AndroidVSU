@@ -1,19 +1,19 @@
 package mn.factory.androidvsu.ui.main
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.ActivityMainBinding
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.setVariable(BR.vm, mViewModel)
 
         mNavigationController = Navigation.findNavController(this, R.id.mainNavigationFragment)
-        NavigationUI.setupActionBarWithNavController(this, mNavigationController)
+        setupActionBarWithNavController(this, mNavigationController)
         NavigationUI.setupWithNavController(bottomNavigationView, mNavigationController)
         bottomNavigationView.setupWithNavController(mNavigationController)
     }

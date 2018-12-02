@@ -1,5 +1,6 @@
 dependencies {
     //Koin
     implementation ProjectDependencies.koinAndroid
-    implementation ProjectDependencies.koinAndroidViewModel
+//    implementation ProjectDependencies.koinAndroidViewModel
+    implementation ProjectDependencies.koinViewModelX
 }

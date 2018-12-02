@@ -17,7 +17,7 @@ import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 import mn.factory.domain.adzuna.repositories.JobRepository
 import mn.factory.domain.adzuna.repositories.VersionRepository
 import mn.factory.domain.utils.RxSchedulers
-import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 

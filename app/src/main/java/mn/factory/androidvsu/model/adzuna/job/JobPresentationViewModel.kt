@@ -1,7 +1,8 @@
 package mn.factory.androidvsu.model.adzuna.job
 
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
+import androidx.lifecycle.ViewModel
+
 
 /**
  * Created by Turkin A. on 07/10/2018.

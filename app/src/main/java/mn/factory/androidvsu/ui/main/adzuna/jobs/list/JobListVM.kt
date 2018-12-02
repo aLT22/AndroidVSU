@@ -1,10 +1,10 @@
 package mn.factory.androidvsu.ui.main.adzuna.jobs.list
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.domain.adzuna.interactors.GetJobsInteractor

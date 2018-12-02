@@ -1,6 +1,6 @@
 package mn.factory.androidvsu.ui.main
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 
 /**

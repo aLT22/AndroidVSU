@@ -2,18 +2,18 @@ package mn.factory.androidvsu.ui.main.adzuna.jobs.list
 
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.databinding.library.baseAdapters.BR
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_job_list.*
+import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobListBinding
 import mn.factory.androidvsu.model.ItemPresentation
@@ -36,7 +36,6 @@ class JobListFragment : Fragment() {
         retainInstance = true
 
         mEndlessScrollListener = object : EndlessScrollListener() {
-
             override fun onLoadMore(page: Int, totalItemsCount: Int, recyclerView: RecyclerView) {
                 mViewModel.jobsInteractorRequest.page = page
                 mViewModel.fetchJobs(false)
@@ -71,7 +70,7 @@ class JobListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         jobList?.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             adapter = mJobsAdapter
             setHasFixedSize(true)
             layoutManager?.let {

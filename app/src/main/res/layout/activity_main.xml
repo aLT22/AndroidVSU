@@ -10,7 +10,7 @@
             type="mn.factory.androidvsu.ui.main.MainActivityVM"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/main_activity_graph"/>
 
-        <android.support.design.widget.BottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,5 +41,5 @@
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_navigation_menu"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

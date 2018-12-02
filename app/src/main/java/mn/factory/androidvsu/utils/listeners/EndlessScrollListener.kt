@@ -1,10 +1,10 @@
 package mn.factory.androidvsu.utils.listeners
 
-import android.arch.lifecycle.MutableLiveData
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import mn.factory.androidvsu.utils.exceptions.InvalidLayoutManagerException
 
 /**

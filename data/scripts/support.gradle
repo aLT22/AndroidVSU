@@ -1,4 +1,4 @@
 dependencies {
     //Support libs
-    implementation ProjectDependencies.supportAppCompatv7
+//    implementation ProjectDependencies.supportAppCompatX
 }

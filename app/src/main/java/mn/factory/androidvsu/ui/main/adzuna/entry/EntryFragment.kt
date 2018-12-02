@@ -2,13 +2,11 @@ package mn.factory.androidvsu.ui.main.adzuna.entry
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_entry.*
+import androidx.fragment.app.Fragment
 import mn.factory.androidvsu.R
-import mn.factory.androidvsu.ui.main.MainActivity
 
 class EntryFragment : Fragment() {
 
