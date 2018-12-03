@@ -8,7 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         mNavigationController = Navigation.findNavController(this, R.id.mainNavigationFragment)
         setupActionBarWithNavController(this, mNavigationController)
         NavigationUI.setupWithNavController(bottomNavigationView, mNavigationController)
-        bottomNavigationView.setupWithNavController(mNavigationController)
     }
 
     override fun onSupportNavigateUp(): Boolean =
@@ -40,10 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     fun showFragment(@IdRes actionId: Int, bundle: Bundle) {
         mNavigationController?.let { it.navigate(actionId, bundle) }
-    }
-
-    fun showFragment(@IdRes actionId: Int) {
-        mNavigationController?.let { it.navigate(actionId) }
     }
 
     companion object {

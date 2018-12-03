@@ -108,7 +108,7 @@ class JobListFragment : Fragment() {
 
     companion object {
         const val TAG = "JobListFragment"
-        const val ACTION_TO_DETAILS = R.id.action_jobListFragment_to_jobDetailsFragment
+        const val ACTION_TO_DETAILS = R.id.openJobDetailsAction
 
         private const val KEY_JOB = "JOB"
 
