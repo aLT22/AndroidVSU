@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
+import mn.factory.androidvsu.utils.exts.extendedErrorMessage
 import mn.factory.domain.adzuna.interactors.GetJobsInteractor
 import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 
@@ -40,6 +41,7 @@ class JobListVM(
                 .doOnSubscribe { loading.postValue(true) }
                 .map { mapperJobs.map(it) }
                 .retry(1)
+                .extendedErrorMessage()
                 .subscribe(
                         { entity ->
                             if (isRefresh) {

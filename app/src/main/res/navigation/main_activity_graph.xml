@@ -54,4 +54,5 @@
         android:name="mn.factory.androidvsu.ui.main.adzuna.cars.settings.CarSettingsFragment"
         android:label="fragment_car_settings"
         tools:layout="@layout/fragment_car_settings"/>
+
 </navigation>

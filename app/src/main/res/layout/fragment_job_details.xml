@@ -8,25 +8,18 @@
             type="mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsVM"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
+        android:layout_height="match_parent">
 
-        <mn.factory.androidvsu.ui.custom.CollapsibleTextView
-            android:id="@+id/description"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:expanded="false"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            bind:content="@{vm.MJobPresentation.description}"/>
+            tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>

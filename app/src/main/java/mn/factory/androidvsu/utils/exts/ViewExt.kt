@@ -12,9 +12,9 @@ import android.view.animation.Transformation
  */
 
 /**
-* View extension block for animations starts
-* */
-private const val DEFAULT_DURATION = 200L
+ * View extension block for animations starts
+ * */
+private const val DEFAULT_DURATION = 400L
 private val DEFAULT_INTERPOLATOR = AccelerateDecelerateInterpolator()
 
 fun View.rotate(start: Int,
@@ -42,6 +42,7 @@ fun View.expand(): Long {
                     } else {
                         (targetHeight * interpolatedTime).toInt()
                     }
+//                    (targetHeight * interpolatedTime).toInt()
             requestLayout()
         }
 
@@ -77,5 +78,5 @@ fun View.collapse(): Long {
     return transformation.duration
 }
 /**
-* View extension block for animations ends
-* */
+ * View extension block for animations ends
+ * */

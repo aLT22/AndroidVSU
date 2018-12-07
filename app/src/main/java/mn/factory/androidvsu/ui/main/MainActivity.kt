@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         mNavigationController?.let { it.navigate(actionId, bundle) }
     }
 
+    fun showFragment(@IdRes actionId: Int) {
+        mNavigationController?.let { it.navigate(actionId) }
+    }
+
     companion object {
         const val TAG = "MainActivity"
     }

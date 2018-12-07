@@ -29,3 +29,8 @@ apply from: 'scripts/ui.gradle'
 apply from: 'scripts/di.gradle'
 apply from: 'scripts/rx.gradle'
 apply from: 'scripts/arch.gradle'
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+}

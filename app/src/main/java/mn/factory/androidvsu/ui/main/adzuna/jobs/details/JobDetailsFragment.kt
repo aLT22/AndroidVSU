@@ -2,6 +2,7 @@ package mn.factory.androidvsu.ui.main.adzuna.jobs.details
 
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,19 +13,22 @@ import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobDetailsBinding
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class JobDetailsFragment : Fragment() {
 
-    private val mViewModel: JobDetailsVM by inject()
+    private val mViewModel: JobDetailsVM by viewModel()
     lateinit var mBinding: FragmentJobDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+
         arguments?.let {
             mViewModel.mJobPresentation = it[KEY_JOB] as JobPresentation
             mViewModel.title.value = mViewModel.mJobPresentation?.title
+            mViewModel.mDescription.postValue(Html.fromHtml(mViewModel.mJobPresentation?.description))
+            mViewModel.mDescriptionString.postValue(mViewModel.mJobPresentation?.description)
         }
     }
 
@@ -38,10 +42,6 @@ class JobDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        mViewModel.title.observe(this, Observer {
-            mBinding.description.setTitle(it)
-        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

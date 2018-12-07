@@ -47,6 +47,9 @@ object ProjectDependencies {
     val lifecycleCompiler = "android.arch.lifecycle:compiler:${Versions.lifecycle}"
     val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
+
+    val waveLoading = "com.race604.waveloading:library:${Versions.waveLoading}"
+    val expandableLayout = "com.github.aakira:expandable-layout:${Versions.expandableLayout}"
 }
 
 object TestDependencies {
@@ -107,4 +110,7 @@ object Versions {
 
     const val lifecycle = "1.1.1"
     const val navigation = "1.0.0-alpha07"
+
+    const val waveLoading = "1.1.1"
+    const val expandableLayout = "1.6.0@aar"
 }

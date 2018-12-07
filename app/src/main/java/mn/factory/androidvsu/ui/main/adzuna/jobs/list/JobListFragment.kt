@@ -22,10 +22,11 @@ import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivity
 import mn.factory.androidvsu.utils.listeners.EndlessScrollListener
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class JobListFragment : Fragment() {
 
-    private val mViewModel: JobListVM by inject()
+    private val mViewModel: JobListVM by viewModel()
     lateinit var mBinding: FragmentJobListBinding
     private val mJobsAdapter: JobsRecyclerAdapter by inject()
 

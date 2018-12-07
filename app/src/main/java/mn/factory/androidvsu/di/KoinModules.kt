@@ -1,11 +1,13 @@
 package mn.factory.androidvsu.di
 
+import mn.factory.androidvsu.App
 import mn.factory.androidvsu.model.adzuna.mapper.JobSearchResultToJobPresentationMapper
 import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMapper
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListVM
+import mn.factory.androidvsu.ui.splash.SplashVM
 import mn.factory.data.api.adzuna.mapper.JobSearchResultNetworkToJobSearchResultMapper
 import mn.factory.data.api.adzuna.mapper.VersionNetworkToVersionMapper
 import mn.factory.data.api.adzuna.repositories.JobRepositoryImpl
@@ -26,6 +28,7 @@ import org.koin.dsl.module.module
  */
 
 val appModule: Module = module {
+    single { App() }
     single<RxSchedulers> { RxSchedulersImpl() }
 }
 
@@ -38,6 +41,7 @@ val viewModule: Module = module {
     //Fragment VMs
     viewModel { JobListVM(get(), get()) }
     viewModel { JobDetailsVM() }
+    viewModel { SplashVM(get(), get(), get()) }
 }
 
 val interactorsModule = module {
@@ -52,9 +56,9 @@ val repositoryModule = module {
 }
 
 val mappersModule = module {
-    single { VersionNetworkToVersionMapper() }
-    single { VersionToVersionPresentationMapper() }
+    factory { VersionNetworkToVersionMapper() }
+    factory { VersionToVersionPresentationMapper() }
 
-    single { JobSearchResultNetworkToJobSearchResultMapper() }
-    single { JobSearchResultToJobPresentationMapper() }
+    factory { JobSearchResultNetworkToJobSearchResultMapper() }
+    factory { JobSearchResultToJobPresentationMapper() }
 }

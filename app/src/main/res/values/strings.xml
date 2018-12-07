@@ -10,4 +10,7 @@
     <!-- Menu -->
     <string name="menu_jobs">Jobs</string>
     <string name="menu_cars">Cars</string>
+
+    <!-- Splash screen -->
+    <string name="adzuna_version">Versions: API: %d, Software: %s</string>
 </resources>
