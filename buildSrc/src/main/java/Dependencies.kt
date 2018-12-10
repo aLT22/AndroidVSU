@@ -12,26 +12,15 @@ object ProjectDependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
-    //Classic deps
-    val supportAppCompatv7 = "com.android.support:appcompat-v7:${Versions.support}"
-    val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
-    val cardView = "com.android.support:cardview-v7:${Versions.support}"
-    val recyclerView = "com.android.support:recyclerview-v7:${Versions.support}"
-    val design = "com.android.support:design:${Versions.support}"
-    val material = "com.google.android.material:material:${Versions.material}"
-
     //AndroidX deps
     val supportAppCompatX = "androidx.appcompat:appcompat:${Versions.supportX}"
     val constraintLayoutX = "androidx.constraintlayout:constraintlayout:${Versions.constraintX}"
     val cardViewX = "androidx.cardview:cardview:${Versions.supportX}"
     val recyclerViewX = "androidx.recyclerview:recyclerview:${Versions.supportX}"
-
-    //Koin regular
-    val koinAndroid = "org.koin:koin-android:${Versions.koin}"
-    val koinAndroidViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
-    val koinAndroidScope = "org.koin:koin-android-scope:${Versions.koin}"
+    val material = "com.google.android.material:material:${Versions.supportX}"
 
     //Koin AndroidX
+    val koinAndroid = "org.koin:koin-android:${Versions.koinX}"
     val koinViewModelX = "org.koin:koin-androidx-viewmodel:${Versions.koinX}"
     val koinScopeX = "org.koin:koin-androidx-scope:${Versions.koinX}"
 
@@ -84,22 +73,10 @@ object Versions {
     const val runnerX = "1.1.0"
     const val espressoX = "3.1.0"
 
-    //Classic deps versions
-    const val support = "28.0.0"
-    const val constraintLayout = "1.1.3"
-    const val material = "1.0.0-beta01"
-
     //AndroidX deps versions
     const val supportX = "1.0.0"
     const val constraintX = "1.1.2"
 
-    const val dagger = "2.16"
-    const val javaxInject = "1"
-
-    //Regular koin
-    const val koin = "1.0.2"
-
-    //AndroidX koin
     const val koinX = "1.0.2"
 
     const val retrofit = "2.4.0"

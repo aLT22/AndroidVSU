@@ -3,5 +3,6 @@ dependencies {
     implementation ProjectDependencies.constraintLayoutX
     implementation ProjectDependencies.cardViewX
     implementation ProjectDependencies.recyclerViewX
+    implementation ProjectDependencies.material
     implementation ProjectDependencies.waveLoading
 }
