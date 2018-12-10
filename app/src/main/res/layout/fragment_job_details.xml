@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View"/>
 
         <variable
             name="vm"
@@ -12,12 +14,131 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".ui.main.adzuna.jobs.details.JobDetailsFragment">
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MTitle}"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="@{vm.MTitleVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Job title"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MDescription}"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="@{vm.MDescriptionVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                tools:text="Job description"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/company"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MCompany}"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:visibility="@{vm.MCompanyVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                tools:text="Company name"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MLocation}"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                android:visibility="@{vm.MLocationVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/company"
+                tools:text="Location"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/salary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MSalary}"
+                android:textSize="18sp"
+                android:visibility="@{vm.MSalaryVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/salaryOptions"
+                app:layout_constraintTop_toBottomOf="@+id/location"
+                tools:text="Salary: 90000 - 10000 per month"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/salaryOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:visibility="@{vm.MSalaryVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/salary"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/salary"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contract"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="start"
+                android:text="@{vm.MContract}"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:visibility="@{vm.MContractVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/salaryOptions"
+                tools:text="Contract type: permanent till 10.10.2021"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/moreInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="start"
+                android:paddingBottom="4dp"
+                android:text="@{vm.MInfo}"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="@{vm.MInfoVisibility ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contract"
+                tools:text="More info here"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
