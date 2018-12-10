@@ -13,4 +13,9 @@
 
     <!-- Splash screen -->
     <string name="adzuna_version">Versions: API: %d, Software: %s</string>
+
+    <!-- Job details screen -->
+    <string name="more_info">More info…</string>
+    <string name="salary">Salary: %s - %s per %s</string>
+    <string name="contract">Contract type: %s till %s</string>
 </resources>
