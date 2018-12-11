@@ -11,6 +11,8 @@ object ProjectModules {
 object ProjectDependencies {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
+    val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     //AndroidX deps
     val supportAppCompatX = "androidx.appcompat:appcompat:${Versions.supportX}"
@@ -56,8 +58,9 @@ object TestDependencies {
 
 object Versions {
     const val gradleAndroidPlugin = "3.2.0"
-    const val kotlin = "1.2.71"
+    const val kotlin = "1.3.11"
     const val ktx = "1.0.0"
+    const val coroutines = "1.0.1"
 
     const val compileSdk = 28
     const val targetSdk = 28

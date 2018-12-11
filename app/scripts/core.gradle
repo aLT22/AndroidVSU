@@ -13,4 +13,6 @@ dependencies {
 
     //kotlin features
     implementation ProjectDependencies.kotlin
+    implementation ProjectDependencies.coroutinesCore
+    implementation ProjectDependencies.coroutinesAndroid
 }
