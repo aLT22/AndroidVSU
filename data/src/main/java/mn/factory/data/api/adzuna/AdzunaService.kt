@@ -66,6 +66,82 @@ interface AdzunaService {
                 @Query("part_time") @JobType partTime: String,
                 @Query("contract") @JobType contract: String,
                 @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
+
+    @GET("jobs/{country}/search/{page}")
+    fun getJobs(@Path("country") country: String,
+                @Path("page") page: Int,
+                @Query("results_per_page") resultsPerPage: Int,
+                @Query("what") what: String,
+                @Query("max_days_old") maxDaysOld: Int,
+                @Query("sort_direction") @SortDirection sortDirection: String,
+                @Query("sort_by") @SortBy sortBy: String,
+                @Query("full_time") @JobType fullTime: String,
+                @Query("part_time") @JobType partTime: String,
+                @Query("contract") @JobType contract: String,
+                @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
+
+    @GET("jobs/{country}/search/{page}")
+    fun getJobs(@Path("country") country: String,
+                @Path("page") page: Int,
+                @Query("results_per_page") resultsPerPage: Int,
+                @Query("what") what: String,
+                @Query("title_only") titleOnly: String,
+                @Query("max_days_old") maxDaysOld: Int,
+                @Query("sort_direction") @SortDirection sortDirection: String,
+                @Query("sort_by") @SortBy sortBy: String,
+                @Query("full_time") @JobType fullTime: String,
+                @Query("part_time") @JobType partTime: String,
+                @Query("contract") @JobType contract: String,
+                @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
+
+    @GET("jobs/{country}/search/{page}")
+    fun getJobs(@Path("country") country: String,
+                @Path("page") page: Int,
+                @Query("results_per_page") resultsPerPage: Int,
+                @Query("what") what: String,
+                @Query("title_only") titleOnly: String,
+                @Query("where") where: String,
+                @Query("distance") distance: String,
+                @Query("max_days_old") maxDaysOld: Int,
+                @Query("sort_direction") @SortDirection sortDirection: String,
+                @Query("sort_by") @SortBy sortBy: String,
+                @Query("full_time") @JobType fullTime: String,
+                @Query("part_time") @JobType partTime: String,
+                @Query("contract") @JobType contract: String,
+                @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
+
+    @GET("jobs/{country}/search/{page}")
+    fun getJobs(@Path("country") country: String,
+                @Path("page") page: Int,
+                @Query("results_per_page") resultsPerPage: Int,
+                @Query("what") what: String,
+                @Query("title_only") titleOnly: String,
+                @Query("where") where: String,
+                @Query("distance") distance: String,
+                @Query("category") category: String,
+                @Query("max_days_old") maxDaysOld: Int,
+                @Query("sort_direction") @SortDirection sortDirection: String,
+                @Query("sort_by") @SortBy sortBy: String,
+                @Query("full_time") @JobType fullTime: String,
+                @Query("part_time") @JobType partTime: String,
+                @Query("contract") @JobType contract: String,
+                @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
+
+    @GET("jobs/{country}/search/{page}")
+    fun getJobs(@Path("country") country: String,
+                @Path("page") page: Int,
+                @Query("results_per_page") resultsPerPage: Int,
+                @Query("what") what: String,
+                @Query("title_only") titleOnly: String,
+                @Query("where") where: String,
+                @Query("sort_direction") @SortDirection sortDirection: String,
+                @Query("sort_by") @SortBy sortBy: String,
+                @Query("salary_min") salaryMin: Int,
+                @Query("salary_max") salaryMax: Int,
+                @Query("full_time") @JobType fullTime: String,
+                @Query("part_time") @JobType partTime: String,
+                @Query("contract") @JobType contract: String,
+                @Query("permanent") @JobType permanent: String): Single<JobSearchResultsNetwork>
     /*
     * Jobs block ends
     * */
