@@ -41,18 +41,6 @@ class SplashActivity : AppCompatActivity() {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        mViewModel.mCountDownTimer?.start()
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        mViewModel.mCountDownTimer?.cancel()
-    }
-
     private fun initLoadingView() {
         mDrawable = WaveDrawable(this, R.drawable.adzuna_logo)
         adzunaLogo.setImageDrawable(mDrawable)

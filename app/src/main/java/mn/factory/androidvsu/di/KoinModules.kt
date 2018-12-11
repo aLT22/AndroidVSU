@@ -7,6 +7,7 @@ import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListVM
+import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListSettingsVM
 import mn.factory.androidvsu.ui.splash.SplashVM
 import mn.factory.data.api.adzuna.mapper.JobSearchResultNetworkToJobSearchResultMapper
 import mn.factory.data.api.adzuna.mapper.VersionNetworkToVersionMapper
@@ -42,6 +43,7 @@ val viewModule: Module = module {
     viewModel { JobListVM(get(), get()) }
     viewModel { JobDetailsVM() }
     viewModel { SplashVM(get(), get(), get()) }
+    viewModel { JobListSettingsVM(get()) }
 }
 
 val interactorsModule = module {

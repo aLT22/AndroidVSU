@@ -7,11 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.bottom_sheet_settings_job.*
 import kotlinx.android.synthetic.main.fragment_job_list.*
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
@@ -23,14 +28,18 @@ import mn.factory.androidvsu.ui.main.MainActivity
 import mn.factory.androidvsu.utils.listeners.EndlessScrollListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class JobListFragment : Fragment() {
 
     private val mViewModel: JobListVM by viewModel()
-    lateinit var mBinding: FragmentJobListBinding
+    private val mSettingsViewModel: JobListSettingsVM by viewModel()
+
+    private lateinit var mBinding: FragmentJobListBinding
     private val mJobsAdapter: JobsRecyclerAdapter by inject()
 
     private var mEndlessScrollListener: EndlessScrollListener? = null
+    private lateinit var mBottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +66,9 @@ class JobListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        /**
+         * JobsVM block starts
+         * */
         mViewModel.getJobs().observe(this, Observer {
             mJobsAdapter.setJobs(it ?: emptyList<JobPresentation>())
         })
@@ -64,6 +76,19 @@ class JobListFragment : Fragment() {
         mViewModel.loading.observe(this, Observer {
             mBinding.swipeRefreshLayout.isRefreshing = it!!
         })
+        /**
+         * JobsVM block ends
+         * */
+
+        /**
+         * JobListSettingsVM block starts
+         * */
+        mSettingsViewModel.mSalaryTitle.observe(this, Observer {
+            titleSalary.text = it
+        })
+        /**
+         * JobListSettingsVM block ends
+         * */
     }
 
     @SuppressLint("CheckResult")
@@ -80,6 +105,80 @@ class JobListFragment : Fragment() {
             addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
         }
 
+        salaryOptions?.apply {
+            val spinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf("per year", "per month"))
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+            adapter = spinnerAdapter
+
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    mSettingsViewModel.mSalaryOption.postValue(position)
+                }
+            }
+        }
+
+        swipeRefreshLayout?.apply {
+            setOnRefreshListener {
+                mEndlessScrollListener?.let {
+                    it.reset()
+                    mViewModel.resetRequest()
+                    mViewModel.fetchJobs(true)
+                }
+            }
+        }
+
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        mBottomSheetBehavior?.apply {
+            setBottomSheetTitle()
+
+            setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(p0: View, p1: Float) {
+                }
+
+                @SuppressLint("SwitchIntDef")
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    setBottomSheetTitle(newState)
+                }
+            })
+
+            if (savedInstanceState != null) {
+                val savedState = savedInstanceState[KEY_BOTTOM_SHEET_STATE] as Int?
+                if (savedState != null) {
+                    mBottomSheetBehavior.state = savedState
+                }
+            }
+        }
+        title?.apply {
+            setOnClickListener {
+                if (mBottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                } else {
+                    mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+        }
+
+        salary?.apply {
+            clearThumbs()
+            addThumb(mSettingsViewModel.mSalaryMin.value?.toInt()!!)
+            addThumb(mSettingsViewModel.mSalaryMax.value?.toInt()!!)
+
+            setOnThumbValueChangeListener { _, _, thumbIndex, value ->
+                when (thumbIndex) {
+                    SLIDER_LEFT_THUMB -> {
+                        mSettingsViewModel.mSalaryMin.postValue(value.toString())
+                    }
+                    SLIDER_RIGHT_THUMB -> {
+                        mSettingsViewModel.mSalaryMax.postValue(value.toString())
+                    }
+                }
+            }
+        }
+
         mJobsAdapter.clickObservable.subscribe(
                 {
                     (activity as MainActivity).showFragment(ACTION_TO_DETAILS, sharedBundle(it))
@@ -88,14 +187,15 @@ class JobListFragment : Fragment() {
                     Log.e(TAG, it.localizedMessage)
                 }
         )
+    }
 
-        swipeRefreshLayout.setOnRefreshListener {
-            mEndlessScrollListener?.let {
-                it.reset()
-                mViewModel.resetRequest()
-                mViewModel.fetchJobs(true)
-            }
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        /**
+         * Save bottom sheet state
+         * */
+        outState.putInt(KEY_BOTTOM_SHEET_STATE, mBottomSheetBehavior.state)
     }
 
     private fun sharedBundle(jobPresentation: ItemPresentation): Bundle {
@@ -107,9 +207,40 @@ class JobListFragment : Fragment() {
         return arguments
     }
 
+    private fun setBottomSheetTitle() =
+            when (mBottomSheetBehavior.state) {
+                BottomSheetBehavior.STATE_EXPANDED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
+                BottomSheetBehavior.STATE_COLLAPSED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                else -> {
+                }
+            }
+
+    private fun setBottomSheetTitle(newState: Int) =
+            when (newState) {
+                BottomSheetBehavior.STATE_EXPANDED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
+                BottomSheetBehavior.STATE_COLLAPSED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                else -> {
+                }
+            }
+
     companion object {
         const val TAG = "JobListFragment"
+
+        /**
+         * SavedInstanceState keys
+         * */
+        const val KEY_BOTTOM_SHEET_STATE = "BOTTOM_SHEET_STATE"
+        /**
+         * SavedInstanceState keys
+         * */
+
         const val ACTION_TO_DETAILS = R.id.openJobDetailsAction
+
+        const val SLIDER_LEFT_THUMB = 0
+        const val SLIDER_RIGHT_THUMB = 1
+
+        const val OPEN = "open"
+        const val CLOSE = "close"
 
         private const val KEY_JOB = "JOB"
 

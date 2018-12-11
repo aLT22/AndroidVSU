@@ -40,6 +40,7 @@ class SplashVM(
             }
 
         }
+        mCountDownTimer?.start()
     }
 
     @SuppressLint("CheckResult")
@@ -57,6 +58,11 @@ class SplashVM(
                     isVersionLoaded = true
                     mVersion.postValue("Couldn't fetch info")
                 })
+    }
+
+    override fun onCleared() {
+        mCountDownTimer?.cancel()
+        super.onCleared()
     }
 
     companion object {

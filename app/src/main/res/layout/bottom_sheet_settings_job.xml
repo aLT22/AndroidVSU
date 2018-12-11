@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGrayLight"
+    android:paddingBottom="8dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="48dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <!-- Bottom sheet title -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bottom_sheet_settings_title_background"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Jobs filter"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dragOrClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="italic"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayDark"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <!-- Settings content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="56dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/chooseCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/choose_country"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/countries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/whatTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="The keywords to search for: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chooseCountry"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/what"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/what_hint"
+                android:inputType="text"
+                android:textColorHint="@color/colorGray"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/whatTitle"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleTitleOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="The keywords in title only to search for: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/what"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/titleOnly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/titleOnly_hint"
+                android:inputType="text"
+                android:textColorHint="@color/colorGray"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleTitleOnly"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleWhere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="The geographic centre of the search: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleOnly"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/where"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/where_hint"
+                android:inputType="text"
+                android:textColorHint="@color/colorGray"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleWhere"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleSortDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Search order: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/where"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sortDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/titleSortDirection"
+                app:layout_constraintTop_toBottomOf="@+id/where"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleSortBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Sort orders by: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toRightOf="@+id/sortDirection"
+                app:layout_constraintTop_toBottomOf="@+id/where"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sortBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintLeft_toRightOf="@+id/titleSortBy"
+                app:layout_constraintTop_toBottomOf="@+id/where"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleSalary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/salaryOptions"
+                app:layout_constraintTop_toBottomOf="@+id/sortDirection"
+                tools:text="Salary range: from 0 to 100"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/salaryOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/titleSalary"
+                app:layout_constraintLeft_toRightOf="@+id/titleSalary"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/titleSalary"/>
+
+            <io.apptik.widget.MultiSlider
+                android:id="@+id/salary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:drawThumbsApart="false"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleSalary"
+                app:scaleMax="5000000"
+                app:scaleStep="1000"
+                app:thumbNumber="2"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleJobTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Choose job type by time: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/salary"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/jobTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/titleJobTime"
+                app:layout_constraintLeft_toRightOf="@+id/titleJobTime"
+                app:layout_constraintTop_toTopOf="@+id/titleJobTime"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleJobType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Choose job type by contract: "
+                android:textColor="@color/colorBlack"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleJobTime"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/jobType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/titleJobType"
+                app:layout_constraintLeft_toRightOf="@+id/titleJobType"
+                app:layout_constraintTop_toTopOf="@+id/titleJobType"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

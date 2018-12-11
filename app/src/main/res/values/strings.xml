@@ -18,4 +18,12 @@
     <string name="more_info">More info…</string>
     <string name="salary">Salary: %s - %s per %s</string>
     <string name="contract">Contract type: %s till %s</string>
+
+    <!-- Job settings screen -->
+    <string name="drag_or_click">Drag it &#8597; or click to %s</string>
+    <string name="choose_country">Choose country for searching &#8594;</string>
+    <string name="what_hint"><i>Android developer etc.</i></string>
+    <string name="titleOnly_hint"><i>Specialist etc.</i></string>
+    <string name="where_hint"><i>London etc.</i></string>
+    <string name="salary_range"><i>Salary range: from %s to %s</i></string>
 </resources>

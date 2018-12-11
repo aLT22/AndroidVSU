@@ -34,11 +34,13 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGrayLight"
-            app:itemBackground="@color/colorGrayLight"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/bottom_navigation_color"
+            app:itemTextColor="@color/bottom_navigation_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainNavigationFragment"
             app:menu="@menu/bottom_navigation_menu"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
