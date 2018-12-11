@@ -5,4 +5,5 @@ dependencies {
     implementation ProjectDependencies.recyclerViewX
     implementation ProjectDependencies.material
     implementation ProjectDependencies.waveLoading
+    implementation ProjectDependencies.multislider
 }

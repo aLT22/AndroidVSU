@@ -39,6 +39,7 @@ object ProjectDependencies {
 
     val waveLoading = "com.race604.waveloading:library:${Versions.waveLoading}"
     val expandableLayout = "com.github.aakira:expandable-layout:${Versions.expandableLayout}"
+    val multislider = "io.apptik.widget:multislider:${Versions.multislider}"
 }
 
 object TestDependencies {
@@ -90,4 +91,5 @@ object Versions {
 
     const val waveLoading = "1.1.1"
     const val expandableLayout = "1.6.0@aar"
+    const val multislider = "1.3"
 }
