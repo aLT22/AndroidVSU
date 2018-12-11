@@ -16,9 +16,6 @@
         <action
             android:id="@+id/openJobDetailsAction"
             app:destination="@id/jobDetailsFragment"/>
-        <action
-            android:id="@+id/openJobSettingsAction"
-            app:destination="@id/jobSettingsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/actionCars"
@@ -29,9 +26,6 @@
             android:name="title"
             android:defaultValue="Cars"/>
         <action
-            android:id="@+id/openCarSettingsAction"
-            app:destination="@id/carSettingsFragment"/>
-        <action
             android:id="@+id/openCarDetailsAction"
             app:destination="@id/carDetailsFragment"/>
     </fragment>
@@ -40,19 +34,9 @@
         android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsFragment"
         android:label="JobDetailsFragment"/>
     <fragment
-        android:id="@+id/jobSettingsFragment"
-        android:name="mn.factory.androidvsu.ui.main.adzuna.jobs.settings.JobSettingsFragment"
-        android:label="fragment_job_settings"
-        tools:layout="@layout/fragment_job_settings"/>
-    <fragment
         android:id="@+id/carDetailsFragment"
         android:name="mn.factory.androidvsu.ui.main.adzuna.cars.details.CarDetailsFragment"
         android:label="fragment_car_details"
         tools:layout="@layout/fragment_car_details"/>
-    <fragment
-        android:id="@+id/carSettingsFragment"
-        android:name="mn.factory.androidvsu.ui.main.adzuna.cars.settings.CarSettingsFragment"
-        android:label="fragment_car_settings"
-        tools:layout="@layout/fragment_car_settings"/>
 
 </navigation>
