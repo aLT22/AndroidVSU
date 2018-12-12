@@ -18,6 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_settings_job.*
 import kotlinx.android.synthetic.main.fragment_job_list.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobListBinding
@@ -105,18 +109,26 @@ class JobListFragment : Fragment() {
             addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
         }
 
-        salaryOptions?.apply {
-            val spinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf("per year", "per month"))
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        GlobalScope.launch(Dispatchers.Main) {
+            salaryOptions?.apply {
+                val spinnerAdapter = async(Dispatchers.IO) {
+                    ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf(PER_YEAR, PER_MONTH))
+                }.await()
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-            adapter = spinnerAdapter
+                adapter = spinnerAdapter
 
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+                mSettingsViewModel.mSalaryOption.value?.apply {
+                    setSelection(this)
                 }
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    mSettingsViewModel.mSalaryOption.postValue(position)
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        mSettingsViewModel.mSalaryOption.postValue(position)
+                    }
                 }
             }
         }
@@ -207,21 +219,43 @@ class JobListFragment : Fragment() {
         return arguments
     }
 
-    private fun setBottomSheetTitle() =
+    private fun setBottomSheetTitle() {
+        GlobalScope.launch(Dispatchers.Main) {
             when (mBottomSheetBehavior.state) {
-                BottomSheetBehavior.STATE_EXPANDED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
-                BottomSheetBehavior.STATE_COLLAPSED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    dragOrClick.text = async(Dispatchers.IO) {
+                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
+                    }.await()
+                }
+                BottomSheetBehavior.STATE_COLLAPSED -> {
+                    dragOrClick.text = async(Dispatchers.IO) {
+                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                    }.await()
+                }
                 else -> {
                 }
             }
+        }
+    }
 
-    private fun setBottomSheetTitle(newState: Int) =
+    private fun setBottomSheetTitle(newState: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
             when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
-                BottomSheetBehavior.STATE_COLLAPSED -> dragOrClick.text = String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    dragOrClick.text = async(Dispatchers.IO) {
+                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
+                    }.await()
+                }
+                BottomSheetBehavior.STATE_COLLAPSED -> {
+                    dragOrClick.text = async(Dispatchers.IO) {
+                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                    }.await()
+                }
                 else -> {
                 }
             }
+        }
+    }
 
     companion object {
         const val TAG = "JobListFragment"
@@ -234,14 +268,26 @@ class JobListFragment : Fragment() {
          * SavedInstanceState keys
          * */
 
+        /**
+         * Navigation actions
+         * */
         const val ACTION_TO_DETAILS = R.id.openJobDetailsAction
 
+        /**
+         * Settings panel
+         * */
         const val SLIDER_LEFT_THUMB = 0
         const val SLIDER_RIGHT_THUMB = 1
 
         const val OPEN = "open"
         const val CLOSE = "close"
 
+        const val PER_YEAR = "per year"
+        const val PER_MONTH = "per month"
+
+        /**
+         * Bundle keys
+         * */
         private const val KEY_JOB = "JOB"
 
         fun newInstance() = JobListFragment().apply { retainInstance = true }
