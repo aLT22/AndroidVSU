@@ -7,6 +7,11 @@
     <!-- ImageView content description and other stubs -->
     <string name="stub" translatable="false"/>
 
+    <!-- ViewHolder -->
+    <string name="without_salary_min">… - %s</string>
+    <string name="without_salary_max">%s - …</string>
+    <string name="salary_from_to">%s - %s</string>
+
     <!-- Menu -->
     <string name="menu_jobs">Jobs</string>
     <string name="menu_cars">Cars</string>

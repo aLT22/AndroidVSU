@@ -6,7 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import mn.factory.androidvsu.BR
+import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.ItemJobBinding
 import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
@@ -88,20 +93,45 @@ class JobsViewHolder(
     @SuppressLint("SetTextI18n")
     private fun bindSalary(salaryMin: Double?,
                            salaryMax: Double?) {
-        val salaryPerMonthMin = salaryMin?.div(12)?.toInt().toString()
-        val salaryPerMonthMax = salaryMax?.div(12)?.toInt().toString()
+        GlobalScope.launch(Dispatchers.Main) {
+            var salaryPerMonthMin = async(Dispatchers.IO) {
+                salaryMin?.div(12)?.toInt().toString()
+            }.await()
+            var salaryPerMonthMax = async(Dispatchers.IO) {
+                salaryMax?.div(12)?.toInt().toString()
+            }.await()
 
-        if (salaryPerMonthMin == "null" && salaryPerMonthMax != "null") {
-            itemJobBinding.salary.visibility = View.VISIBLE
-            itemJobBinding.salary.text = "... - $salaryPerMonthMax"
-        } else if (salaryPerMonthMin != "null" && salaryPerMonthMax == "null") {
-            itemJobBinding.salary.visibility = View.VISIBLE
-            itemJobBinding.salary.text = "$salaryPerMonthMin - ..."
-        } else if (salaryPerMonthMin != "null" && salaryPerMonthMax != "null") {
-            itemJobBinding.salary.visibility = View.VISIBLE
-            itemJobBinding.salary.text = "$salaryPerMonthMin - $salaryPerMonthMax"
-        } else {
-            itemJobBinding.salary.visibility = View.GONE
+            if (salaryPerMonthMin == "null" && salaryPerMonthMax != "null") {
+                itemJobBinding.salary.visibility = View.VISIBLE
+                itemJobBinding.salary.text = async(Dispatchers.IO) {
+                    String.format(
+                            Locale.getDefault(),
+                            itemJobBinding.root.context.resources.getString(R.string.without_salary_min),
+                            salaryPerMonthMax
+                    )
+                }.await()
+            } else if (salaryPerMonthMin != "null" && salaryPerMonthMax == "null") {
+                itemJobBinding.salary.visibility = View.VISIBLE
+                itemJobBinding.salary.text = async(Dispatchers.IO) {
+                    String.format(
+                            Locale.getDefault(),
+                            itemJobBinding.root.context.resources.getString(R.string.without_salary_max),
+                            salaryPerMonthMin
+                    )
+                }.await()
+            } else if (salaryPerMonthMin != "null" && salaryPerMonthMax != "null") {
+                itemJobBinding.salary.visibility = View.VISIBLE
+                itemJobBinding.salary.text = async(Dispatchers.IO) {
+                    String.format(
+                            Locale.getDefault(),
+                            itemJobBinding.root.context.resources.getString(R.string.salary_from_to),
+                            salaryPerMonthMin,
+                            salaryPerMonthMax
+                    )
+                }.await()
+            } else {
+                itemJobBinding.salary.visibility = View.GONE
+            }
         }
     }
 
