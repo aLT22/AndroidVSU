@@ -8,9 +8,9 @@
     <string name="stub" translatable="false"/>
 
     <!-- ViewHolder -->
-    <string name="without_salary_min">… - %s</string>
-    <string name="without_salary_max">%s - …</string>
-    <string name="salary_from_to">%s - %s</string>
+    <string name="without_salary_min">… - %s c.u</string>
+    <string name="without_salary_max">%s c.u. - …</string>
+    <string name="salary_from_to">%s c.u. - %s c.u.</string>
 
     <!-- Menu -->
     <string name="menu_jobs">Jobs</string>
@@ -21,7 +21,7 @@
 
     <!-- Job details screen -->
     <string name="more_info">More info…</string>
-    <string name="salary">Salary: %s - %s per %s</string>
+    <string name="salary">Salary: %s c.u. - %s c.u. per %s</string>
     <string name="contract">Contract type: %s till %s</string>
 
     <!-- Job settings screen -->
@@ -30,5 +30,5 @@
     <string name="what_hint"><i>Android developer etc.</i></string>
     <string name="titleOnly_hint"><i>Specialist etc.</i></string>
     <string name="where_hint"><i>London etc.</i></string>
-    <string name="salary_range"><i>Salary range: from %s to %s</i></string>
+    <string name="salary_range"><i>Salary range: from %s c.u. to %s c.u.</i></string>
 </resources>
