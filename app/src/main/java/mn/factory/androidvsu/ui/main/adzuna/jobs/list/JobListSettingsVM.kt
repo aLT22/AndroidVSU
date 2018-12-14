@@ -4,15 +4,21 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 import mn.factory.androidvsu.R
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Turkin A. on 11/12/2018.
  */
 class JobListSettingsVM(
         private val context: Application
-) : AndroidViewModel(context) {
+) : AndroidViewModel(context), CoroutineScope {
+
+    val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + job
 
     val mCountry = MutableLiveData<String>()
 
@@ -54,28 +60,40 @@ class JobListSettingsVM(
     private fun postSalaryTitle(salaryOption: Int) {
         when (salaryOption) {
             SALARY_PER_YEAR -> {
-                mSalaryTitle
-                        .postValue(
-                                String.format(
-                                        Locale.getDefault(),
-                                        context.resources.getString(R.string.salary_range),
-                                        mSalaryMin.value,
-                                        mSalaryMax.value
-                                )
-                        )
+                launch {
+                    mSalaryTitle
+                            .postValue(
+                                    withContext(coroutineContext) {
+                                        String.format(
+                                                Locale.getDefault(),
+                                                context.resources.getString(R.string.salary_range),
+                                                mSalaryMin.value,
+                                                mSalaryMax.value
+                                        )
+                                    }
+                            )
+                }
             }
             SALARY_PER_MONTH -> {
-                mSalaryTitle
-                        .postValue(
-                                String.format(
-                                        Locale.getDefault(),
-                                        context.resources.getString(R.string.salary_range),
-                                        (mSalaryMin.value?.toInt()?.div(12)).toString(),
-                                        (mSalaryMax.value?.toInt()?.div(12)).toString()
-                                )
-                        )
+                launch {
+                    mSalaryTitle
+                            .postValue(
+                                    withContext(coroutineContext) {
+                                        String.format(
+                                                Locale.getDefault(),
+                                                context.resources.getString(R.string.salary_range),
+                                                (mSalaryMin.value?.toInt()?.div(12)).toString(),
+                                                (mSalaryMax.value?.toInt()?.div(12)).toString()
+                                        )
+                                    }
+                            )
+                }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 
     companion object {

@@ -3,19 +3,26 @@ package mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs
 import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.Observable
+import kotlinx.coroutines.*
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.ui.adapter.rv.BaseRecyclerAdapter
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.diffutils.JobListDiffUtil
+import mn.factory.androidvsu.utils.exts.extendedErrorMessage
 import mn.factory.domain.utils.RxSchedulers
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Turkin A. on 07/10/2018.
  */
 class JobsRecyclerAdapter(
         private val rxSchedulers: RxSchedulers
-) : BaseRecyclerAdapter() {
+) : BaseRecyclerAdapter(), CoroutineScope {
+
+    val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private var jobs: ArrayList<JobPresentation> = ArrayList()
 
@@ -40,11 +47,22 @@ class JobsRecyclerAdapter(
                     .fromCallable(JobListDiffUtil(jobs, items as ArrayList<JobPresentation>))
                     .subscribeOn(rxSchedulers.computation())
                     .observeOn(rxSchedulers.ui())
+                    .extendedErrorMessage()
                     .subscribe(
                             {
-                                jobs.clear()
-                                jobs.addAll(items)
-                                it.dispatchUpdatesTo(this)
+                                launch {
+                                    val listCleared = withContext(Dispatchers.IO) {
+                                        jobs.clear()
+                                        jobs.isEmpty()
+                                    }
+                                    if (listCleared) it.dispatchUpdatesTo(this@JobsRecyclerAdapter)
+
+                                    val itemsAdded = withContext(Dispatchers.IO) {
+                                        jobs.addAll(items)
+                                        !jobs.isEmpty()
+                                    }
+                                    if (itemsAdded) it.dispatchUpdatesTo(this@JobsRecyclerAdapter)
+                                }
                             },
                             {
                                 Log.d("setJobs: ", it.localizedMessage)

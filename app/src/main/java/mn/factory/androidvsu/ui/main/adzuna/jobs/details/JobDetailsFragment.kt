@@ -12,10 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_job_details.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobDetailsBinding
@@ -23,9 +20,14 @@ import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.utils.exts.newBrowserIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 
-class JobDetailsFragment : Fragment() {
+class JobDetailsFragment : Fragment(), CoroutineScope {
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private val mViewModel: JobDetailsVM by viewModel()
     lateinit var mBinding: FragmentJobDetailsBinding
@@ -34,7 +36,7 @@ class JobDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         retainInstance = true
 
-        GlobalScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             arguments?.let {
                 mViewModel.mJobPresentation = it[KEY_JOB] as JobPresentation
 
@@ -110,105 +112,102 @@ class JobDetailsFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        coroutineContext.cancelChildren()
+        super.onDestroyView()
+    }
+
     private fun initMoreInfo() {
         moreInfo.paintFlags = moreInfo.paintFlags or Paint.UNDERLINE_TEXT_FLAG
     }
 
-    private fun initSpinner() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val spinnerAdapterDeferred = async(Dispatchers.IO) {
-                ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf("per year", "per month"))
+    private fun initSpinner() = launch {
+        val spinnerAdapterDeferred = async(Dispatchers.IO) {
+            ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf("per year", "per month"))
+        }
+
+        salaryOptions.adapter = spinnerAdapterDeferred.await().apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+    }
+
+    private fun showSalaryPerMonth() = launch {
+        var minSalary = withContext(Dispatchers.IO) {
+            (mViewModel.mJobPresentation?.salaryMin?.div(12))?.toInt().toString()
+        }
+        var maxSalary = withContext(Dispatchers.IO) {
+            (mViewModel.mJobPresentation?.salaryMax?.div(12))?.toInt().toString()
+        }
+
+        val stringSalary = withContext(Dispatchers.IO) {
+            if (minSalary == "null" && maxSalary == "null") {
+                mViewModel.mSalaryVisibility.postValue(false)
+            } else if (minSalary == "null" && maxSalary != "null") {
+                minSalary = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else if (maxSalary == "null" && minSalary != "null") {
+                maxSalary = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else {
+                mViewModel.mSalaryVisibility.postValue(true)
             }
 
-            salaryOptions.adapter = spinnerAdapterDeferred.await().apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+            String.format(Locale.getDefault(), resources.getString(R.string.salary), minSalary, maxSalary, MONTH)
         }
+
+        salary.text = stringSalary
     }
 
-    private fun showSalaryPerMonth() {
-        GlobalScope.launch(Dispatchers.Main) {
-            var minSalary = async(Dispatchers.IO) {
-                (mViewModel.mJobPresentation?.salaryMin?.div(12))?.toInt().toString()
-            }.await()
-            var maxSalary = async(Dispatchers.IO) {
-                (mViewModel.mJobPresentation?.salaryMax?.div(12))?.toInt().toString()
-            }.await()
-
-            val stringSalary = async(Dispatchers.IO) {
-                if (minSalary == "null" && maxSalary == "null") {
-                    mViewModel.mSalaryVisibility.postValue(false)
-                } else if (minSalary == "null" && maxSalary != "null") {
-                    minSalary = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else if (maxSalary == "null" && minSalary != "null") {
-                    maxSalary = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else {
-                    mViewModel.mSalaryVisibility.postValue(true)
-                }
-
-                String.format(Locale.getDefault(), resources.getString(R.string.salary), minSalary, maxSalary, MONTH)
-            }.await()
-
-            salary.text = stringSalary
+    private fun showSalaryPerYear() = launch {
+        var minSalary = withContext(Dispatchers.IO) {
+            (mViewModel.mJobPresentation?.salaryMin)?.toInt().toString()
         }
+        var maxSalary = withContext(Dispatchers.IO) {
+            (mViewModel.mJobPresentation?.salaryMax)?.toInt().toString()
+        }
+
+        val stringSalary = withContext(Dispatchers.IO) {
+            if (minSalary == "null" && maxSalary == "null") {
+                mViewModel.mSalaryVisibility.postValue(false)
+            } else if (minSalary == "null" && maxSalary != "null") {
+                minSalary = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else if (maxSalary == "null" && minSalary != "null") {
+                maxSalary = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else {
+                mViewModel.mSalaryVisibility.postValue(true)
+            }
+
+            String.format(Locale.getDefault(), resources.getString(R.string.salary), minSalary, maxSalary, YEAR)
+        }
+
+        salary.text = stringSalary
     }
 
-    private fun showSalaryPerYear() {
-        GlobalScope.launch(Dispatchers.Main) {
-            var minSalary = async(Dispatchers.IO) {
-                (mViewModel.mJobPresentation?.salaryMin)?.toInt().toString()
-            }.await()
-            var maxSalary = async(Dispatchers.IO) {
-                (mViewModel.mJobPresentation?.salaryMax)?.toInt().toString()
-            }.await()
-
-            val stringSalary = async(Dispatchers.IO) {
-                if (minSalary == "null" && maxSalary == "null") {
-                    mViewModel.mSalaryVisibility.postValue(false)
-                } else if (minSalary == "null" && maxSalary != "null") {
-                    minSalary = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else if (maxSalary == "null" && minSalary != "null") {
-                    maxSalary = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else {
-                    mViewModel.mSalaryVisibility.postValue(true)
-                }
-
-                String.format(Locale.getDefault(), resources.getString(R.string.salary), minSalary, maxSalary, YEAR)
-            }.await()
-
-            salary.text = stringSalary
+    private fun showContract() = launch(Dispatchers.IO) {
+        var contractType = withContext(Dispatchers.IO) {
+            mViewModel.mJobPresentation?.contractType
         }
-    }
-
-    private fun showContract() {
-        GlobalScope.launch(Dispatchers.IO) {
-            var contractType = async(Dispatchers.IO) {
-                mViewModel.mJobPresentation?.contractType
-            }.await()
-            var contractTime = async(Dispatchers.IO) {
-                mViewModel.mJobPresentation?.contractTime
-            }.await()
-
-            val stringContract = async(Dispatchers.IO) {
-                if (contractType == "null" && contractTime == "null") {
-                    mViewModel.mContractVisibility.postValue(false)
-                } else if (contractType == "null" && contractTime != "null") {
-                    contractType = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else if (contractTime == "null" && contractType != "null") {
-                    contractTime = "..."
-                    mViewModel.mSalaryVisibility.postValue(true)
-                } else {
-                    mViewModel.mSalaryVisibility.postValue(true)
-                }
-
-                String.format(Locale.getDefault(), resources.getString(R.string.contract), contractType, contractTime)
-            }.await()
-
-            mViewModel.mContract.postValue(stringContract)
+        var contractTime = withContext(Dispatchers.IO) {
+            mViewModel.mJobPresentation?.contractTime
         }
+
+        val stringContract = withContext(Dispatchers.IO) {
+            if (contractType == "null" && contractTime == "null") {
+                mViewModel.mContractVisibility.postValue(false)
+            } else if (contractType == "null" && contractTime != "null") {
+                contractType = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else if (contractTime == "null" && contractType != "null") {
+                contractTime = "..."
+                mViewModel.mSalaryVisibility.postValue(true)
+            } else {
+                mViewModel.mSalaryVisibility.postValue(true)
+            }
+
+            String.format(Locale.getDefault(), resources.getString(R.string.contract), contractType, contractTime)
+        }
+
+        mViewModel.mContract.postValue(stringContract)
     }
 
     private fun showLocation() {

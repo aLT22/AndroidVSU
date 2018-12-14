@@ -18,10 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_settings_job.*
 import kotlinx.android.synthetic.main.fragment_job_list.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import mn.factory.androidvsu.BR
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobListBinding
@@ -33,8 +30,13 @@ import mn.factory.androidvsu.utils.listeners.EndlessScrollListener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class JobListFragment : Fragment() {
+class JobListFragment : Fragment(), CoroutineScope {
+
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private val mViewModel: JobListVM by viewModel()
     private val mSettingsViewModel: JobListSettingsVM by viewModel()
@@ -109,7 +111,7 @@ class JobListFragment : Fragment() {
             addOnScrollListener(mEndlessScrollListener as EndlessScrollListener)
         }
 
-        GlobalScope.launch(Dispatchers.Main) {
+        launch {
             salaryOptions?.apply {
                 val spinnerAdapter = async(Dispatchers.IO) {
                     ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf(PER_YEAR, PER_MONTH))
@@ -201,6 +203,11 @@ class JobListFragment : Fragment() {
         )
     }
 
+    override fun onDestroyView() {
+        coroutineContext.cancelChildren()
+        super.onDestroyView()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -220,7 +227,7 @@ class JobListFragment : Fragment() {
     }
 
     private fun setBottomSheetTitle() {
-        GlobalScope.launch(Dispatchers.Main) {
+        launch {
             when (mBottomSheetBehavior.state) {
                 BottomSheetBehavior.STATE_EXPANDED -> {
                     dragOrClick.text = async(Dispatchers.IO) {
@@ -239,7 +246,7 @@ class JobListFragment : Fragment() {
     }
 
     private fun setBottomSheetTitle(newState: Int) {
-        GlobalScope.launch(Dispatchers.Main) {
+        launch {
             when (newState) {
                 BottomSheetBehavior.STATE_EXPANDED -> {
                     dragOrClick.text = async(Dispatchers.IO) {
