@@ -14,6 +14,9 @@ import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentationViewModel
 import mn.factory.androidvsu.ui.adapter.rv.BaseViewHolder
+import mn.factory.domain.utils.CoroutinesDispatchers
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -22,11 +25,12 @@ import kotlin.coroutines.CoroutineContext
  */
 class JobsViewHolder(
         private val itemJobBinding: ItemJobBinding
-) : BaseViewHolder(itemJobBinding), CoroutineScope {
+) : BaseViewHolder(itemJobBinding), CoroutineScope, KoinComponent {
 
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
+    private val mDispatchers: CoroutinesDispatchers by inject()
 
     //todo: add these kind of animation into the project
     //https://proandroiddev.com/implement-google-inbox-style-animation-on-android-18c261baeda6
@@ -96,16 +100,16 @@ class JobsViewHolder(
     private fun bindSalary(salaryMin: Double?,
                            salaryMax: Double?) {
         launch {
-            var salaryPerMonthMin = withContext(Dispatchers.IO) {
+            var salaryPerMonthMin = withContext(mDispatchers.io()) {
                 salaryMin?.div(12)?.toInt().toString()
             }
-            var salaryPerMonthMax = withContext(Dispatchers.IO) {
+            var salaryPerMonthMax = withContext(mDispatchers.io()) {
                 salaryMax?.div(12)?.toInt().toString()
             }
 
             if (salaryPerMonthMin == "null" && salaryPerMonthMax != "null") {
                 itemJobBinding.salary.visibility = View.VISIBLE
-                itemJobBinding.salary.text = withContext(Dispatchers.IO) {
+                itemJobBinding.salary.text = withContext(mDispatchers.io()) {
                     String.format(
                             Locale.getDefault(),
                             itemJobBinding.root.context.resources.getString(R.string.without_salary_min),
@@ -114,7 +118,7 @@ class JobsViewHolder(
                 }
             } else if (salaryPerMonthMin != "null" && salaryPerMonthMax == "null") {
                 itemJobBinding.salary.visibility = View.VISIBLE
-                itemJobBinding.salary.text = withContext(Dispatchers.IO) {
+                itemJobBinding.salary.text = withContext(mDispatchers.io()) {
                     String.format(
                             Locale.getDefault(),
                             itemJobBinding.root.context.resources.getString(R.string.without_salary_max),
@@ -123,7 +127,7 @@ class JobsViewHolder(
                 }
             } else if (salaryPerMonthMin != "null" && salaryPerMonthMax != "null") {
                 itemJobBinding.salary.visibility = View.VISIBLE
-                itemJobBinding.salary.text = withContext(Dispatchers.IO) {
+                itemJobBinding.salary.text = withContext(mDispatchers.io()) {
                     String.format(
                             Locale.getDefault(),
                             itemJobBinding.root.context.resources.getString(R.string.salary_from_to),

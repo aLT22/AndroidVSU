@@ -12,4 +12,5 @@ dependencies {
 
     //Kotlin deps
     implementation ProjectDependencies.kotlin
+    implementation ProjectDependencies.coroutinesCore
 }

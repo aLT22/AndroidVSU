@@ -6,19 +6,21 @@ import mn.factory.androidvsu.model.adzuna.mapper.VersionToVersionPresentationMap
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivityVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.details.JobDetailsVM
-import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListVM
 import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListSettingsVM
+import mn.factory.androidvsu.ui.main.adzuna.jobs.list.JobListVM
 import mn.factory.androidvsu.ui.splash.SplashVM
 import mn.factory.data.api.adzuna.mapper.JobSearchResultNetworkToJobSearchResultMapper
 import mn.factory.data.api.adzuna.mapper.VersionNetworkToVersionMapper
 import mn.factory.data.api.adzuna.repositories.JobRepositoryImpl
 import mn.factory.data.api.adzuna.repositories.VersionRepositoryImpl
+import mn.factory.data.utils.CoroutinesDispatchersImpl
 import mn.factory.data.utils.RxSchedulersImpl
 import mn.factory.domain.adzuna.interactors.GetJobsInteractor
 import mn.factory.domain.adzuna.interactors.GetVersionInteractor
 import mn.factory.domain.adzuna.interactors.request.GetJobsRequest
 import mn.factory.domain.adzuna.repositories.JobRepository
 import mn.factory.domain.adzuna.repositories.VersionRepository
+import mn.factory.domain.utils.CoroutinesDispatchers
 import mn.factory.domain.utils.RxSchedulers
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
@@ -31,6 +33,7 @@ import org.koin.dsl.module.module
 val appModule: Module = module {
     single { App() }
     single<RxSchedulers> { RxSchedulersImpl() }
+    single<CoroutinesDispatchers> { CoroutinesDispatchersImpl() }
 }
 
 val viewModule: Module = module {

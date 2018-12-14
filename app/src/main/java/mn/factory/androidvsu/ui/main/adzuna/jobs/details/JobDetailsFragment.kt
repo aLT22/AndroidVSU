@@ -18,6 +18,8 @@ import mn.factory.androidvsu.R
 import mn.factory.androidvsu.databinding.FragmentJobDetailsBinding
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.utils.exts.newBrowserIntent
+import mn.factory.domain.utils.CoroutinesDispatchers
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -28,6 +30,7 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
+    private val mDispatchers: CoroutinesDispatchers by inject()
 
     private val mViewModel: JobDetailsVM by viewModel()
     lateinit var mBinding: FragmentJobDetailsBinding
@@ -36,7 +39,7 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
         super.onCreate(savedInstanceState)
         retainInstance = true
 
-        launch(Dispatchers.IO) {
+        launch(mDispatchers.io()) {
             arguments?.let {
                 mViewModel.mJobPresentation = it[KEY_JOB] as JobPresentation
 
@@ -97,7 +100,7 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
 
         moreInfo.setOnClickListener {
             mViewModel.mJobPresentation?.let {
-                val detailsUrlIntent = it.redirectUrl?.let { it1 -> newBrowserIntent(it1) }
+                val detailsUrlIntent = it.redirectUrl?.let { redirectUrl -> newBrowserIntent(redirectUrl) }
                 startActivity(detailsUrlIntent)
             }
         }
@@ -122,22 +125,22 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
     }
 
     private fun initSpinner() = launch {
-        val spinnerAdapterDeferred = async(Dispatchers.IO) {
-            ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf("per year", "per month"))
+        val spinnerAdapterDeferred = async(mDispatchers.io()) {
+            ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf(PER_YEAR, PER_MONTH))
         }
 
         salaryOptions.adapter = spinnerAdapterDeferred.await().apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
     }
 
     private fun showSalaryPerMonth() = launch {
-        var minSalary = withContext(Dispatchers.IO) {
+        var minSalary = withContext(mDispatchers.io()) {
             (mViewModel.mJobPresentation?.salaryMin?.div(12))?.toInt().toString()
         }
-        var maxSalary = withContext(Dispatchers.IO) {
+        var maxSalary = withContext(mDispatchers.io()) {
             (mViewModel.mJobPresentation?.salaryMax?.div(12))?.toInt().toString()
         }
 
-        val stringSalary = withContext(Dispatchers.IO) {
+        val stringSalary = withContext(mDispatchers.io()) {
             if (minSalary == "null" && maxSalary == "null") {
                 mViewModel.mSalaryVisibility.postValue(false)
             } else if (minSalary == "null" && maxSalary != "null") {
@@ -157,14 +160,14 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
     }
 
     private fun showSalaryPerYear() = launch {
-        var minSalary = withContext(Dispatchers.IO) {
+        var minSalary = withContext(mDispatchers.io()) {
             (mViewModel.mJobPresentation?.salaryMin)?.toInt().toString()
         }
-        var maxSalary = withContext(Dispatchers.IO) {
+        var maxSalary = withContext(mDispatchers.io()) {
             (mViewModel.mJobPresentation?.salaryMax)?.toInt().toString()
         }
 
-        val stringSalary = withContext(Dispatchers.IO) {
+        val stringSalary = withContext(mDispatchers.io()) {
             if (minSalary == "null" && maxSalary == "null") {
                 mViewModel.mSalaryVisibility.postValue(false)
             } else if (minSalary == "null" && maxSalary != "null") {
@@ -183,15 +186,15 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
         salary.text = stringSalary
     }
 
-    private fun showContract() = launch(Dispatchers.IO) {
-        var contractType = withContext(Dispatchers.IO) {
+    private fun showContract() = launch(mDispatchers.io()) {
+        var contractType = withContext(mDispatchers.io()) {
             mViewModel.mJobPresentation?.contractType
         }
-        var contractTime = withContext(Dispatchers.IO) {
+        var contractTime = withContext(mDispatchers.io()) {
             mViewModel.mJobPresentation?.contractTime
         }
 
-        val stringContract = withContext(Dispatchers.IO) {
+        val stringContract = withContext(mDispatchers.io()) {
             if (contractType == "null" && contractTime == "null") {
                 mViewModel.mContractVisibility.postValue(false)
             } else if (contractType == "null" && contractTime != "null") {
@@ -229,6 +232,9 @@ class JobDetailsFragment : Fragment(), CoroutineScope {
 
         private const val YEAR = "year"
         private const val MONTH = "month"
+
+        private const val PER_YEAR = "per year"
+        private const val PER_MONTH = "per month"
 
         fun newInstance() = JobDetailsFragment()
 

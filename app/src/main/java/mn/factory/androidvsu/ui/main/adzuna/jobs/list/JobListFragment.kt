@@ -27,6 +27,7 @@ import mn.factory.androidvsu.model.adzuna.job.JobPresentation
 import mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs.JobsRecyclerAdapter
 import mn.factory.androidvsu.ui.main.MainActivity
 import mn.factory.androidvsu.utils.listeners.EndlessScrollListener
+import mn.factory.domain.utils.CoroutinesDispatchers
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -37,6 +38,7 @@ class JobListFragment : Fragment(), CoroutineScope {
     private val job = SupervisorJob()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
+    private val mDispatchers: CoroutinesDispatchers by inject()
 
     private val mViewModel: JobListVM by viewModel()
     private val mSettingsViewModel: JobListSettingsVM by viewModel()
@@ -113,9 +115,9 @@ class JobListFragment : Fragment(), CoroutineScope {
 
         launch {
             salaryOptions?.apply {
-                val spinnerAdapter = async(Dispatchers.IO) {
+                val spinnerAdapter = withContext(mDispatchers.io()) {
                     ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, arrayOf(PER_YEAR, PER_MONTH))
-                }.await()
+                }
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                 adapter = spinnerAdapter
@@ -156,6 +158,7 @@ class JobListFragment : Fragment(), CoroutineScope {
                 @SuppressLint("SwitchIntDef")
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     setBottomSheetTitle(newState)
+                    loadDataAccordingSettings(newState)
                 }
             })
 
@@ -193,6 +196,12 @@ class JobListFragment : Fragment(), CoroutineScope {
             }
         }
 
+        reset?.apply {
+            setOnClickListener {
+                mSettingsViewModel.mChangeWatcher.value = false
+            }
+        }
+
         mJobsAdapter.clickObservable.subscribe(
                 {
                     (activity as MainActivity).showFragment(ACTION_TO_DETAILS, sharedBundle(it))
@@ -226,42 +235,42 @@ class JobListFragment : Fragment(), CoroutineScope {
         return arguments
     }
 
-    private fun setBottomSheetTitle() {
-        launch {
-            when (mBottomSheetBehavior.state) {
-                BottomSheetBehavior.STATE_EXPANDED -> {
-                    dragOrClick.text = async(Dispatchers.IO) {
-                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
-                    }.await()
+    private fun setBottomSheetTitle() = launch {
+        when (mBottomSheetBehavior.state) {
+            BottomSheetBehavior.STATE_EXPANDED -> {
+                dragOrClick.text = withContext(mDispatchers.io()) {
+                    String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
                 }
-                BottomSheetBehavior.STATE_COLLAPSED -> {
-                    dragOrClick.text = async(Dispatchers.IO) {
-                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
-                    }.await()
+            }
+            BottomSheetBehavior.STATE_COLLAPSED -> {
+                dragOrClick.text = withContext(mDispatchers.io()) {
+                    String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
                 }
-                else -> {
-                }
+            }
+            else -> {
             }
         }
     }
 
-    private fun setBottomSheetTitle(newState: Int) {
-        launch {
-            when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> {
-                    dragOrClick.text = async(Dispatchers.IO) {
-                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
-                    }.await()
-                }
-                BottomSheetBehavior.STATE_COLLAPSED -> {
-                    dragOrClick.text = async(Dispatchers.IO) {
-                        String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
-                    }.await()
-                }
-                else -> {
+    private fun setBottomSheetTitle(newState: Int) = launch {
+        when (newState) {
+            BottomSheetBehavior.STATE_EXPANDED -> {
+                dragOrClick.text = withContext(mDispatchers.io()) {
+                    String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), CLOSE)
                 }
             }
+            BottomSheetBehavior.STATE_COLLAPSED -> {
+                dragOrClick.text = withContext(mDispatchers.io()) {
+                    String.format(Locale.getDefault(), resources.getString(R.string.drag_or_click), OPEN)
+                }
+            }
+            else -> {
+            }
         }
+    }
+
+    private fun loadDataAccordingSettings(newState: Int) {
+
     }
 
     companion object {

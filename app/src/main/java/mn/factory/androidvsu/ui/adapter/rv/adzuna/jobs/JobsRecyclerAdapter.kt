@@ -3,7 +3,9 @@ package mn.factory.androidvsu.ui.adapter.rv.adzuna.jobs
 import android.annotation.SuppressLint
 import android.util.Log
 import io.reactivex.Observable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import mn.factory.androidvsu.R
 import mn.factory.androidvsu.model.ItemPresentation
 import mn.factory.androidvsu.model.adzuna.job.JobPresentation
@@ -50,19 +52,10 @@ class JobsRecyclerAdapter(
                     .extendedErrorMessage()
                     .subscribe(
                             {
-                                launch {
-                                    val listCleared = withContext(Dispatchers.IO) {
-                                        jobs.clear()
-                                        jobs.isEmpty()
-                                    }
-                                    if (listCleared) it.dispatchUpdatesTo(this@JobsRecyclerAdapter)
-
-                                    val itemsAdded = withContext(Dispatchers.IO) {
-                                        jobs.addAll(items)
-                                        !jobs.isEmpty()
-                                    }
-                                    if (itemsAdded) it.dispatchUpdatesTo(this@JobsRecyclerAdapter)
-                                }
+                                jobs.clear()
+                                it.dispatchUpdatesTo(this)
+                                jobs.addAll(items)
+                                it.dispatchUpdatesTo(this)
                             },
                             {
                                 Log.d("setJobs: ", it.localizedMessage)

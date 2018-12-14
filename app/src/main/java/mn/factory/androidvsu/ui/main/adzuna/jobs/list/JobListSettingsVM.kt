@@ -41,10 +41,14 @@ class JobListSettingsVM(
     val mSalaryMax = MutableLiveData<String>()
     val mSalaryOption = MutableLiveData<Int>()
 
+    val mChangeWatcher = MediatorLiveData<Boolean>()
+
     init {
         mSalaryOption.value = SALARY_PER_YEAR
         mSalaryMin.value = "0"
         mSalaryMax.value = "5000000"
+
+        mChangeWatcher.value = false
 
         mSalaryTitle.addSource(mSalaryMin) {
             postSalaryTitle(mSalaryOption.value!!)
@@ -54,6 +58,34 @@ class JobListSettingsVM(
         }
         mSalaryTitle.addSource(mSalaryOption) {
             postSalaryTitle(it)
+        }
+
+        mChangeWatcher.addSource(mCountry) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mKeywords) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mGeographicCenter) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mSearchOrder) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mSortOrder) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mJobTypeByTime) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mJobTypeByContract) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mSalaryMin) {
+            postSettingsChanges()
+        }
+        mChangeWatcher.addSource(mSalaryMax) {
+            postSettingsChanges()
         }
     }
 
@@ -90,6 +122,10 @@ class JobListSettingsVM(
                 }
             }
         }
+    }
+
+    private fun postSettingsChanges() = launch {
+        mChangeWatcher.postValue(true)
     }
 
     override fun onCleared() {

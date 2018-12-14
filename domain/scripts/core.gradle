@@ -1,4 +1,8 @@
 dependencies {
     //FileTree
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin features
+    implementation ProjectDependencies.kotlin
+    implementation ProjectDependencies.coroutinesCore
 }
