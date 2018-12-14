@@ -93,6 +93,7 @@ class JobListSettingsVM(
     }
 
     override fun onCleared() {
+        coroutineContext.cancelChildren()
         super.onCleared()
     }
 
